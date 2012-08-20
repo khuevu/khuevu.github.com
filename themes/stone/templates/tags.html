@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<section id="content" class="body">
+<div class="entry">
+<h1>Available Tags</h1>
+<ul>
+{% for tag, null in tags %}
+<li><a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a></li>
+{% endfor %}
+</div>
+</section>
+{% endblock %}
+

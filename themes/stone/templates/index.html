@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<section id="content" class="body">
+{% if articles %}
+<ol id="posts" class="hfeed" start="{{ articles_paginator.per_page - 1 }}">
+  {% for article in articles_page.object_list %}
+    <li>
+      <article class="entry">
+        <header>
+        <h1 class="entry-title"><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></h1>
+        <abbr class="published" title="{{ article.date.isoformat() }}">
+                {{ article.locale_date }}
+        </abbr>
+        <p>In <a href="{{ SITEURL }}/{{ article.category.url }}"><b>{{ article.category }}</b></a>{% if PDF_PROCESSOR %}<a href="{{ SITEURL }}/pdf/{{ article.slug }}.pdf">get the pdf</a>{% endif %}</p>
+        </header>
+        <div class="entry-content">
+          {{ article.content }}
+        </div>
+        <footer>
+          {% include 'article_infos.html' %}
+          {% include 'twitter.html' %}
+        </footer>
+      </article>
+    </li>
+    
+  {% endfor %}
+  </ol>
+  {% include 'pagination.html' %}
+{% else %}
+
+{% endif %}
+</section>
+{% endblock %}
