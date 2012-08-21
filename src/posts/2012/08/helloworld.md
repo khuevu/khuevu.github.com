@@ -4,6 +4,10 @@ Tags: random
 Slug: hello-world 
 Category: Blog
 
-This is the content of my first blog post
-Isorum 1, 2, 3
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.
+Hello World !   
+
+When one learns a any new programming language, one first starts off with a simple program which output "Hello World". I have always been fascinated by this ritual. It is like opening a door to a new world of wonders.     
+
+So here I am writing my first blog entry. Not strictly the first though. I once wrote a blog as a school assignment, with all the mumbling. This blog is the one that come out of my free will. There are many times I need to write down to give structure and clarity to what I am thinking. I figure it will be better if I put it up publicly, as self-consciousness will make me produce more serious work. 
+
+I am a software engineer. My concerns nowadays mostly revolve around technical bits. So you can expect this blog to be mostly technical. But sometimes, it will be about other things as well.  
