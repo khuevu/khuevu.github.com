@@ -298,7 +298,7 @@ img.left, figure.left {float: right; margin: 0 0 2em 2em;}
   color: #999;
 }
 
-.menu li > a:hover {
+.menu li:hover {
   text-shadow: 1px 1px 1px #333;
   color: #333;
   cursor: pointer;
@@ -329,6 +329,13 @@ img.left, figure.left {float: right; margin: 0 0 2em 2em;}
 		min-height: 100%;
 		min-width: 240px;
 	}
+
+  #credit {
+    position: absolute; 
+    bottom: 30px;
+  }
+
+
 /*
 	Extras
 *****************/
