@@ -29,6 +29,8 @@ TAG_URL = 'tag/{name}.html'
 TAG_SAVE_AS = 'tag/{name}.html'
 TAGS_SAVE_AS = 'tags.html'
 ARCHIVES_SAVE_AS = 'archive.html'
+#STATIC
+STATIC_PATHS = ['images']
 # Social widget
 SOCIAL = (
           ('You can add links in your config file', '#'),
@@ -47,3 +49,4 @@ DEFAULT_ORPHANS = 1
 TWITTER_USERNAME = 'khuevu'
 DISQUS_SITENAME = "waterspinach"
 GOOGLE_ANALYTICS = "UA-34233563-1"
+GITHUB_URL = "https://github.com/khuevu"

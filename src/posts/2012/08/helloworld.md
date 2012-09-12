@@ -12,4 +12,4 @@ So here I am writing my first blog entry. Not strictly the first though. I once 
 
 I am a software engineer. My concerns nowadays mostly revolve around technical bits. So you can expect this blog to be mostly technical. But sometimes, it will be about other things as well.  
 
-P/S: About the blog name, I am just trying to be funny
+P/S: I am still changing the theme, so it will look nicer, bare with me. 

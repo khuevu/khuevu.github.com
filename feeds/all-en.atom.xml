@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Water Spinach</title><link href="/" rel="alternate"></link><link href="/feeds/all-en.atom.xml" rel="self"></link><id>/</id><updated>2012-08-20T00:00:00+08:00</updated><entry><title>Hello World</title><link href="/2012/08/20/hello-world.html" rel="alternate"></link><updated>2012-08-20T00:00:00+08:00</updated><author><name>Vu Minh Khue</name></author><id>tag:,2012-08-20:2012/08/20/hello-world.html</id><summary type="html">&lt;p&gt;Hello World ! &lt;br /&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Water Spinach</title><link href="/" rel="alternate"></link><link href="/feeds/all-en.atom.xml" rel="self"></link><id>/</id><updated>2012-09-13T00:00:00+08:00</updated><entry><title>Bouncing Balls with Pygame</title><link href="/2012/09/13/bouncing-balls.html" rel="alternate"></link><updated>2012-09-13T00:00:00+08:00</updated><author><name>Vu Minh Khue</name></author><id>tag:,2012-09-13:2012/09/13/bouncing-balls.html</id><summary type="html">&lt;p&gt;&lt;img alt="Bouncing Balls with Pygame" src="./images/bouncingballs.png" /&gt;&lt;/p&gt;
+&lt;p&gt;I have recently played around with Pygame module. It was a fun experience. I decided to use Pygame to write a simple classic bouncing balls simulation.&lt;/p&gt;
+&lt;p&gt;You can have a look at the code &lt;a href="https://github.com/khuevu/pygames/tree/master/bouncingball"&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The Ball object has methods to detect collisions with walls and other balls; callable method &lt;code&gt;update()&lt;/code&gt; to update its position and method &lt;code&gt;draw&lt;/code&gt; to redraw. BallWorld is the Game object containing game logics. It contains the list of balls, loop through all balls to update their positions each refresh.&lt;br /&gt;
+&lt;/p&gt;
+&lt;p&gt;A few things to note: &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Each ball object has a &lt;code&gt;CollisionResponse&lt;/code&gt; object. &lt;code&gt;CollisionResponse&lt;/code&gt; object contains information on the coming collision: new speed, direction. If the ball is not likely to collide at the moment (not going to collide within a very small EPSILON time), the collision time will be set to infinity.&lt;/li&gt;
+&lt;li&gt;Positions of ball objects will be calculated at a fixed time interval (&lt;code&gt;TimeStep&lt;/code&gt;) to calibrate ball movements per frame refresh. &lt;/li&gt;
+&lt;li&gt;The use of EPSILON number to estimate comparison as we will not have exact numbers when calculating with float type&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Have fun !. &lt;/p&gt;
+&lt;p&gt;Ah, well, it is not actually a game per se, but it is fun to watch all the balls bouncing. You can try to adjust the number of balls, speeds, etc...&lt;/p&gt;</summary><category term="python"></category><category term="pygame"></category></entry><entry><title>Hello World</title><link href="/2012/08/20/hello-world.html" rel="alternate"></link><updated>2012-08-20T00:00:00+08:00</updated><author><name>Vu Minh Khue</name></author><id>tag:,2012-08-20:2012/08/20/hello-world.html</id><summary type="html">&lt;p&gt;Hello World ! &lt;br /&gt;
 &lt;/p&gt;
 &lt;p&gt;When one learns a any new programming language, one first starts off with a simple program which output "Hello World". I have always been fascinated by this ritual. It is like opening a door to a new world of wonders.   &lt;br /&gt;
 &lt;/p&gt;
 &lt;p&gt;So here I am writing my first blog entry. Not strictly the first though. I once wrote a blog as a school assignment, with all the mumbling. This blog is the one that come out of my free will. There are many times I need to write down to give structure and clarity to what I am thinking. I figure it will be better if I put it up publicly, as self-consciousness will make me produce more serious work. &lt;/p&gt;
 &lt;p&gt;I am a software engineer. My concerns nowadays mostly revolve around technical bits. So you can expect this blog to be mostly technical. But sometimes, it will be about other things as well.&lt;br /&gt;
 &lt;/p&gt;
-&lt;p&gt;P/S: About the blog name, I am just trying to be funny&lt;/p&gt;</summary><category term="random"></category></entry></feed>
+&lt;p&gt;P/S: I am still changing the theme, so it will look nicer, bare with me. &lt;/p&gt;</summary><category term="random"></category></entry></feed>

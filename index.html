@@ -36,6 +36,13 @@
         
   </head> 
   <body id="index" class="home">
+    
+<a href="https://github.com/khuevu">
+
+<img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" />
+
+</a>
+
     <!--Logo, site metadata and navigation menu-->
     <header id="side" class="body">
     <aside id="logo"><div><img src="./theme/images/logo.jpg" width="210" height="140"/></div>
@@ -67,6 +74,43 @@
     <li>
       <article class="entry">
         <header>
+        <h1 class="entry-title"><a href="./2012/09/13/bouncing-balls.html">Bouncing Balls with Pygame</a></h1>
+        <abbr class="published" title="2012-09-13T00:00:00">
+                Thu 13 September 2012
+        </abbr>
+        <p>In <a href="./category/Blog.html"><b>Blog</b></a></p>
+        </header>
+        <div class="entry-content">
+          <p><img alt="Bouncing Balls with Pygame" src="static/images/bouncingballs.png" /></p>
+<p>I have recently played around with Pygame module. It was a fun experience. I decided to use Pygame to write a simple classic bouncing balls simulation.</p>
+<p>You can have a look at the code <a href="https://github.com/khuevu/pygames/tree/master/bouncingball">here</a></p>
+<p>The Ball object has methods to detect collisions with walls and other balls; callable method <code>update()</code> to update its position and method <code>draw</code> to redraw. BallWorld is the Game object containing game logics. It contains the list of balls, loop through all balls to update their positions each refresh.<br />
+</p>
+<p>A few things to note: </p>
+<ul>
+<li>Each ball object has a <code>CollisionResponse</code> object. <code>CollisionResponse</code> object contains information on the coming collision: new speed, direction. If the ball is not likely to collide at the moment (not going to collide within a very small EPSILON time), the collision time will be set to infinity.</li>
+<li>Positions of ball objects will be calculated at a fixed time interval (<code>TimeStep</code>) to calibrate ball movements per frame refresh. </li>
+<li>The use of EPSILON number to estimate comparison as we will not have exact numbers when calculating with float type</li>
+</ul>
+<p>Have fun !. </p>
+<p>Ah, well, it is not actually a game per se, but it is fun to watch all the balls bouncing. You can try to adjust the number of balls, speeds, etc...</p>
+        </div>
+        <footer>
+          <div class="post-info">
+<p>Tags: &nbsp;<a href="./tag/python.html">python</a>&nbsp;&nbsp;<a href="./tag/pygame.html">pygame</a>&nbsp;&nbsp;</p>
+
+</div><!-- /.post-info -->
+          
+<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="khuevu">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+
+        </footer>
+      </article>
+    </li>
+    
+  
+    <li>
+      <article class="entry">
+        <header>
         <h1 class="entry-title"><a href="./2012/08/20/hello-world.html">Hello World</a></h1>
         <abbr class="published" title="2012-08-20T00:00:00">
                 Mon 20 August 2012
@@ -81,7 +125,7 @@
 <p>So here I am writing my first blog entry. Not strictly the first though. I once wrote a blog as a school assignment, with all the mumbling. This blog is the one that come out of my free will. There are many times I need to write down to give structure and clarity to what I am thinking. I figure it will be better if I put it up publicly, as self-consciousness will make me produce more serious work. </p>
 <p>I am a software engineer. My concerns nowadays mostly revolve around technical bits. So you can expect this blog to be mostly technical. But sometimes, it will be about other things as well.<br />
 </p>
-<p>P/S: About the blog name, I am just trying to be funny</p>
+<p>P/S: I am still changing the theme, so it will look nicer, bare with me. </p>
         </div>
         <footer>
           <div class="post-info">
