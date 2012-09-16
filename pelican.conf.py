@@ -3,6 +3,7 @@
 
 SITENAME = u"Water Spinach"
 AUTHOR = u"Vu Minh Khue"
+AUTHOR_EMAIL = "khuevu@gmail.com"
 SITEURL = '/'
 
 TIMEZONE = 'Asia/Singapore'
@@ -50,5 +51,7 @@ TWITTER_USERNAME = 'khuevu'
 DISQUS_SITENAME = "waterspinach"
 GOOGLE_ANALYTICS = "UA-34233563-1"
 GITHUB_URL = "https://github.com/khuevu"
+
+PLUGINS = ['pelican.plugins.gravatar']
 
 MD_EXTENSIONS = ['codehilite', 'extra']

@@ -1,1 +1,1 @@
-pelican -rv -s pelican.conf.py -o ./ -t themes/stone src/
+pelican -r -s pelican.conf.py -o ./ -t themes/stone src/
