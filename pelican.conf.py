@@ -50,3 +50,5 @@ TWITTER_USERNAME = 'khuevu'
 DISQUS_SITENAME = "waterspinach"
 GOOGLE_ANALYTICS = "UA-34233563-1"
 GITHUB_URL = "https://github.com/khuevu"
+
+MD_EXTENSIONS = ['codehilite', 'extra']

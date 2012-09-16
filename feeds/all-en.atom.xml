@@ -11,7 +11,133 @@
 &lt;li&gt;The use of EPSILON number to estimate comparison as we will not have exact numbers when calculating with float type&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Have fun !. &lt;/p&gt;
-&lt;p&gt;Ah, well, it is not actually a game per se, but it is fun to watch all the balls bouncing. You can try to adjust the number of balls, speeds, etc...&lt;/p&gt;</summary><category term="python"></category><category term="pygame"></category></entry><entry><title>Hello World</title><link href="/2012/08/20/hello-world.html" rel="alternate"></link><updated>2012-08-20T00:00:00+08:00</updated><author><name>Vu Minh Khue</name></author><id>tag:,2012-08-20:2012/08/20/hello-world.html</id><summary type="html">&lt;p&gt;Hello World ! &lt;br /&gt;
+&lt;p&gt;Ah, well, it is not actually a game per se, but it is fun to watch all the balls bouncing. You can try to adjust the number of balls, speeds, etc...&lt;/p&gt;</summary><category term="python"></category><category term="pygame"></category></entry><entry><title>MySQL Performance Optimization - Part 1</title><link href="/2012/09/13/mysql-optimization.html" rel="alternate"></link><updated>2012-09-13T00:00:00+08:00</updated><author><name>Vu Minh Khue</name></author><id>tag:,2012-09-13:2012/09/13/mysql-optimization.html</id><summary type="html">&lt;p&gt;Database optimization is very crucial for any production grade application to achieve scalability and high performance. MySQL optimization involves different levels, from optimizing SQL queries, configuring system variables, buffer and cache, refining database structure. This article is going to focus on the first part: optimizing SQL queries to reduce response time. &lt;/p&gt;
+&lt;p&gt;Optimizing SQL query can be restructuring your query, adding indexes. The &lt;code&gt;(*)sec&lt;/code&gt; returned when a query executed is the benchmark on how different optimizations affect the response time. This article will cover optimization of SELECT statments. The optimization of DML statements will be left for later posts.&lt;br /&gt;
+&lt;/p&gt;
+&lt;h2&gt;The EXPLAIN syntax&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;EXPLAIN&lt;/code&gt; command is a very important tool to understand how query is executed in MySQL. When you type &lt;code&gt;EXPLAIN SELECT...&lt;/code&gt;, MySQL doesn't actually perform the query. It just analyzes and tell you how the query will be executed. Some of the output information:&lt;br /&gt;
+&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;select_type&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;table&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;type&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;possible_keys&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;key_len&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;rows&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;extra&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;select_type: type of select statement.&lt;/li&gt;
+&lt;li&gt;table: table name &lt;/li&gt;
+&lt;li&gt;type: Join Types, explains how tables are joined&lt;/li&gt;
+&lt;li&gt;possible_keys: possible indexes to choose&lt;/li&gt;
+&lt;li&gt;key: actually index chosen&lt;/li&gt;
+&lt;li&gt;rows: the estimated number of row need to be examined&lt;/li&gt;
+&lt;li&gt;extra: additional information&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Based on these information, we can start optimize our query. When a &lt;code&gt;SELECT&lt;/code&gt; is executed, there are two ways that MySQL will retrieve the records. It can either scan the table row by row or do an index look up to find the records explicitly. Most of the times, the later case is more desirable and can improve performance significantly. Or that is to say, there should be an used index, i.e, key value in result of explain command&lt;/p&gt;
+&lt;h3&gt;Simple SELECT example:&lt;/h3&gt;
+&lt;p&gt;Let's consider a &lt;code&gt;USER&lt;/code&gt; table: &lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;first_name&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;last_name&lt;/span&gt;  &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="o"&gt;|---|------------|-----------&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;INT&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;VARCHAR&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;30&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;VARCHAR&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;30&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Do a &lt;code&gt;SELECT&lt;/code&gt; statement based on primary key &lt;code&gt;id&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;EXPLAIN&lt;/span&gt; &lt;span class="n"&gt;SELECT&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt; &lt;span class="n"&gt;WHERE&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; 1&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Output:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;select_type&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;table&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;type&lt;/span&gt;  &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;possible_keys&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt;     &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;key_len&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;ref&lt;/span&gt;   &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;rows&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;Extra&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="o"&gt;|----|-------------|-------|-------|---------------|---------|---------|-------|------|-------|&lt;/span&gt;
+&lt;span class="o"&gt;|&lt;/span&gt;  1 &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;SIMPLE&lt;/span&gt;      &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;  &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;const&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;PRIMARY&lt;/span&gt;       &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;PRIMARY&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; 4       &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;const&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;    1 &lt;span class="o"&gt;|&lt;/span&gt;       &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;select_type: &lt;code&gt;SIMPLE&lt;/code&gt;, a single select statement, not a join statment. &lt;/li&gt;
+&lt;li&gt;type: &lt;code&gt;const&lt;/code&gt;, at most one matching row, very fast&lt;/li&gt;
+&lt;li&gt;key: &lt;code&gt;PRIMARY&lt;/code&gt;, primary key is used for look up operation&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Let's do another &lt;code&gt;SELECT&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;EXPLAIN&lt;/span&gt; &lt;span class="n"&gt;SELECT&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt; &lt;span class="n"&gt;WHERE&lt;/span&gt; &lt;span class="n"&gt;first_name&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;khue&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;We will see the result:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;select_type&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;table&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;type&lt;/span&gt;  &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;possible_keys&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt;     &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;key_len&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;ref&lt;/span&gt;   &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;rows&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;Extra&lt;/span&gt;       &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="o"&gt;|----|-------------|-------|-------|---------------|---------|---------|-------|------|-------------|&lt;/span&gt;
+&lt;span class="o"&gt;|&lt;/span&gt;  1 &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;SIMPLE&lt;/span&gt;      &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;  &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;ALL&lt;/span&gt;   &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;NULL&lt;/span&gt;          &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;NULL&lt;/span&gt;    &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;NULL&lt;/span&gt;    &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;NULL&lt;/span&gt;  &lt;span class="o"&gt;|&lt;/span&gt;   18 &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;Using&lt;/span&gt; &lt;span class="n"&gt;where&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;No key is used to look up the result. MySQL optimizer performs a full table scan (row by row) to retrieve the record. To improve the performance, simply add the index to first_name column: &lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;ALTER&lt;/span&gt; &lt;span class="n"&gt;TABLE&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt; &lt;span class="n"&gt;ADD&lt;/span&gt; &lt;span class="n"&gt;INDEX&lt;/span&gt; &lt;span class="n"&gt;first_name_index&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;first_name&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;When you have an index on &lt;code&gt;first_name&lt;/code&gt;, optimizer will still be able to use this index when you only select based on part of the key only: &lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;SELECT&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt; &lt;span class="n"&gt;WHERE&lt;/span&gt; &lt;span class="n"&gt;first_name&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;kh%&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;select_type&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;table&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;type&lt;/span&gt;  &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;possible_keys&lt;/span&gt;   &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt;             &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;key_len&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;ref&lt;/span&gt;   &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;rows&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;Extra&lt;/span&gt;       &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="o"&gt;|----|-------------|-------|-------|-----------------|-----------------|---------|-------|------|-------------|&lt;/span&gt;
+&lt;span class="o"&gt;|&lt;/span&gt;  1 &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;SIMPLE&lt;/span&gt;      &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;  &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;ALL&lt;/span&gt;   &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;first_name_index&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;first_name_index&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;       30&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;const&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;   1  &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;Using&lt;/span&gt; &lt;span class="n"&gt;where&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;SELECT based on multiple columns:&lt;/h3&gt;
+&lt;p&gt;How about searching for record based on two column: &lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;SELECT&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt; &lt;span class="n"&gt;WHERE&lt;/span&gt; &lt;span class="n"&gt;first_name&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;khue&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;AND&lt;/span&gt; &lt;span class="n"&gt;last_name&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;vu&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You can add a multiple column index: &lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;ALTER&lt;/span&gt; &lt;span class="n"&gt;TABLE&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt; &lt;span class="n"&gt;ADD&lt;/span&gt; &lt;span class="n"&gt;INDEX&lt;/span&gt; &lt;span class="n"&gt;first_last_index&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;first_name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;last_name&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;With the above index, the optimizer will use &lt;code&gt;first_last_index&lt;/code&gt; for &lt;code&gt;SELECT&lt;/code&gt; with &lt;code&gt;WHERE&lt;/code&gt; clause like: &lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;first_name&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;abc&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;AND&lt;/span&gt; &lt;span class="n"&gt;last_name&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;xyz&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;first_name&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;abc&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;AND&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;last_name&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;x&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;OR&lt;/span&gt; &lt;span class="n"&gt;last_name&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;y&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;But not for: 
+)
+    last_name = 'xyz'
+    first_name = 'abc' OR last_name = 'xyz'&lt;/p&gt;
+&lt;p&gt;In other words, MySQL optimizer only use index if the first component of the combined index is in the selection criteria.&lt;/p&gt;
+&lt;p&gt;What if you have two separate indexes on these two columns? MySQL optimizer will try to &lt;a href="http://dev.mysql.com/doc/refman/5.6/en/index-merge-optimization.html"&gt;merge the indexes&lt;/a&gt; or select one which it think will filter out more rows.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;SELECT&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt; &lt;span class="n"&gt;WHERE&lt;/span&gt; &lt;span class="n"&gt;first_name&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;abc&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;OR&lt;/span&gt; &lt;span class="n"&gt;last_name&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;xyz&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;With the above statement, optimizer won't use any index, either it is a combined index on two columns &lt;code&gt;first_name&lt;/code&gt; and &lt;code&gt;last_name&lt;/code&gt; or one index on each column. There is a trick to that: &lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;SELECT&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt; &lt;span class="n"&gt;WHERE&lt;/span&gt; &lt;span class="n"&gt;first_name&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;abc&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;UNION&lt;/span&gt; &lt;span class="n"&gt;ALL&lt;/span&gt; &lt;span class="n"&gt;SELECT&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt; &lt;span class="n"&gt;WHERE&lt;/span&gt; &lt;span class="n"&gt;last_name&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;xyz&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Use &lt;code&gt;EXPLAIN&lt;/code&gt; we will have: &lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;select_type&lt;/span&gt;  &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;table&lt;/span&gt;      &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;type&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;possible_keys&lt;/span&gt;  &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt;            &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="o"&gt;|----|--------------|------------|------|----------------|----------------|&lt;/span&gt;
+&lt;span class="o"&gt;|&lt;/span&gt;  1 &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;PRIMARY&lt;/span&gt;      &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;       &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;ref&lt;/span&gt;  &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;first_name&lt;/span&gt;     &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;first_name&lt;/span&gt;     &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="o"&gt;|&lt;/span&gt;  2 &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;UNION&lt;/span&gt;        &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;       &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;ref&lt;/span&gt;  &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;last_name&lt;/span&gt;      &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;last_name&lt;/span&gt;      &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;NULL&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;UNION&lt;/span&gt; &lt;span class="n"&gt;RESULT&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;union1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;2&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;ALL&lt;/span&gt;  &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;NULL&lt;/span&gt;           &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;NULL&lt;/span&gt;         &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The optimizer will execute two SELECT statement, one PRIMARY and one UNION, and then UNION the result set. On each SELECT statement, it uses the respective index to retrieve rows. As a result, we achieve better performance than the previous statement, in which MySQL do a full table scan. &lt;/p&gt;
+&lt;h2&gt;Is index always necessary?&lt;/h2&gt;
+&lt;p&gt;At the begining of this article, I have mentioned that most of the time, key look up is better than full table scan. There is, however, case when full table scan is better. When you have a small table(less than 10 entries), performing a full table scan is faster than key look up. Or when the result set constitutes a large part of the table (more than 30%), full table scan to fetch result rows is faster than key look up and fetch rows later.&lt;br /&gt;
+&lt;/p&gt;
+&lt;p&gt;Fortunately, MySQL optimizer internally takes on the job of calculating the expenses by different approaches and choose the right one for you. It decides whether accessing by index will be more expensive than table scan or vice versa; which index to use among the available.&lt;br /&gt;
+&lt;/p&gt;
+&lt;p&gt;When you think MySQL optimizer is not doing the right thing, you should run &lt;a href="http://dev.mysql.com/doc/refman/5.6/en/analyze-table.html"&gt;ANALYZE&lt;/a&gt; on the table your query applies to. &lt;code&gt;ANALYZE&lt;/code&gt; gives optimizer up-to-date statistical analysis of tables (size, indexes, etc...) thus, it has a better idea on how much resources is needed for each approach. If the optimizer still fails you after running &lt;code&gt;ANALYZE&lt;/code&gt;, try &lt;a href="http://dev.mysql.com/doc/refman/5.6/en/index-hints.html"&gt;making an index hint&lt;/a&gt; to it. You can suggest, force it to use or ignore an index.&lt;br /&gt;
+&lt;/p&gt;
+&lt;h2&gt;What next?&lt;/h2&gt;
+&lt;p&gt;So far we have shortly discussed on how to optimize MySQL query - SELECT statement - through the use of &lt;code&gt;EXPLAIN&lt;/code&gt;. Other topics I want to extend around this theme are: &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Optimizing DML statement. &lt;/li&gt;
+&lt;li&gt;Configuring system variables and memory usage.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Hope I can spend time on them soon. In the mean time, there are plenty of resources to explore on MySQL optimization. You can check out the &lt;a href="http://dev.mysql.com/doc/refman/5.6/en/optimization.html"&gt;Optimization Chapter&lt;/a&gt; on MySQL Reference Manual as a start.&lt;/p&gt;</summary><category term="mysql"></category><category term="optimization"></category></entry><entry><title>Hello World</title><link href="/2012/08/20/hello-world.html" rel="alternate"></link><updated>2012-08-20T00:00:00+08:00</updated><author><name>Vu Minh Khue</name></author><id>tag:,2012-08-20:2012/08/20/hello-world.html</id><summary type="html">&lt;p&gt;Hello World ! &lt;br /&gt;
 &lt;/p&gt;
 &lt;p&gt;When one learns a any new programming language, one first starts off with a simple program which output "Hello World". I have always been fascinated by this ritual. It is like opening a door to a new world of wonders.   &lt;br /&gt;
 &lt;/p&gt;
