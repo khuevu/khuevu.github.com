@@ -1,5 +1,7 @@
 /* Import */
 @import url("reset.css");
+/*@import url("typogrify.css");*/
+@import url("pygment.css");
 @import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz&subset=latin);
 
 /***** Global *****/
@@ -102,7 +104,15 @@ dl {margin: 0 0 1.5em 0;}
 dt {font-weight: bold;}
 dd {margin-left: 1.5em;}
 
-pre{background-color: #000; padding: 10px; color: #fff; margin: 10px; overflow: auto;}
+pre {
+  background-color: #F0F0F0; 
+  padding: 10px; 
+  margin: 10px 5px 10px 0; 
+  overflow: auto;
+  font-style: Bitstream Vera Sans Mono,monospace;
+  font-size: 13px;
+  border: 1px solid #CCC;
+}
 
 /* Quotes */
 blockquote {
@@ -128,7 +138,7 @@ table {margin: .5em auto 1.5em auto; width: 98%;}
 	thead td {}
 
 	/* Tbody */
-	tbody td {padding: .5em .4em;}
+	/*tbody td {padding: .5em .4em;}*/
 	tbody th {}
 	
 	tbody .alt td {}
@@ -531,4 +541,39 @@ li:last-child .entry, #content > .entry
 /********/
 #socialButtons {
     margin-bottom: 1em;
+}
+
+.social-bar::after {
+  margin-top: 40px;
+  clear: both;
+}
+
+.social-bar::after, .social-bar::before {
+  display: table;
+  content: "";
+}
+
+.social {
+  width: 52px;
+  display: inline-block; 
+  height: 51px;
+  background-image: url("../images/socials.png"); 
+  float: left;
+  margin-right: 26px;
+}
+
+#twitter {
+  background-position: 0px 0px;
+}
+
+#linkedin {
+  background-position: -110px 0px;
+}
+
+#googleplus {
+  background-position: -165px 0px;
+}
+
+#me, #introduction {
+  margin-bottom: 30px;
 }

@@ -52,6 +52,6 @@ DISQUS_SITENAME = "waterspinach"
 GOOGLE_ANALYTICS = "UA-34233563-1"
 GITHUB_URL = "https://github.com/khuevu"
 
-PLUGINS = ['pelican.plugins.gravatar']
+PLUGINS = ['pelican.plugins.gravatar',]
 
 MD_EXTENSIONS = ['codehilite', 'extra']

@@ -3,8 +3,19 @@
 {% block content %}
 <section id="content" class="body">
 <div class="entry">
-<h1>About Me</h1>
-<div><img src="{{ author_gravatar }}"/></div>
+<h1>Hi there,</h1>
+<!--Gravatar image. Get from a article attribute as the gravatar plugin assign it as a article's attribute -->
+<div id="me"><img src="{{ articles[0].author_gravatar }}"/></div>
+<div id="introduction">
+  My name is Vu Minh Khue. I am a passionate Software Developer<br/>
+  You can contact me via any of the networks below: 
+</div>
+<div id="social-links" class="social-bar">
+  <a href="http://twitter.com/khuevu" id="twitter" class="social"></a>
+  <a href="http://www.linkedin.com/in/khuevu" id="linkedin" class="social"></a>
+  <a href="https://plus.google.com/100915600132653095277/" id="googleplus" class="social"></a>
+</div>
+
 </div>
 </section>
 {% endblock %}
