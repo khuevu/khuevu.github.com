@@ -4,7 +4,7 @@ Tags: encoding, python
 Slug: basic-unicode
 Category: Blog
 
-!! The Unicode Standard
+## The Unicode Standard
 
 It is always a pay off to understand how character encoding scheme works. Computer only understands number. So there is a need to have a convention to convert from character to number and vice versa. In essence, a string is represented as a array of bytes. A byte can represent 256 values. So it was fine at the begining when only English characters are used in digital world. Each byte simply represent one character. But problem arised when another languages come in with all the different characters. 256 values are not enough to accommodate all of them.    
 
@@ -12,7 +12,7 @@ You might think of using the same number to represent different characters under
 
 Long story short, Unicode is a standard attempting to contain the alphabets for every human language. It does so by assigning an integer value (code point) to every alphabet. It is a document which maps every character (`LATIN SMALL LETTER A`, for example) to a number (`0061` in this case). 
 
-!! Unicode Encoding
+## Unicode Encoding
 
 Remember computer stores string as an array of bytes? So how do we have a string of 8-bit values from code points? We use encoding. 
 
@@ -28,7 +28,7 @@ To summarize, there are, in general, two steps in storing a character in compute
 
 The encoding of character to code point is handled by the Unicode standard. For the second step, any encoding scheme can be used besides UTF-8. Let's say if we use ASCII or ISO-8859-1, if string only contains code point below 128 or 255 respectively, we will have each byte as the same value of the code point. But it contains code point above these value, error will occur (program normally will throw exception).
 
-!! Unicode in Python
+## Unicode in Python
 
 In Python 2x, the default encoding is Extended ASCII. If you attempt to use a character with code point >= 256, exception will be thrown: 
 

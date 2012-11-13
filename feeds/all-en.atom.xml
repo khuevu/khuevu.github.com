@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Water Spinach</title><link href="/" rel="alternate"></link><link href="/feeds/all-en.atom.xml" rel="self"></link><id>/</id><updated>2012-11-10T00:00:00+08:00</updated><entry><title>Character Encoding with Unicode</title><link href="/2012/11/10/basic-unicode.html" rel="alternate"></link><updated>2012-11-10T00:00:00+08:00</updated><author><name>Vu Minh Khue</name></author><id>tag:,2012-11-10:2012/11/10/basic-unicode.html</id><summary type="html">&lt;p&gt;!! The Unicode Standard&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Water Spinach</title><link href="/" rel="alternate"></link><link href="/feeds/all-en.atom.xml" rel="self"></link><id>/</id><updated>2012-11-10T00:00:00+08:00</updated><entry><title>Character Encoding with Unicode</title><link href="/2012/11/10/basic-unicode.html" rel="alternate"></link><updated>2012-11-10T00:00:00+08:00</updated><author><name>Vu Minh Khue</name></author><id>tag:,2012-11-10:2012/11/10/basic-unicode.html</id><summary type="html">&lt;h2&gt;The Unicode Standard&lt;/h2&gt;
 &lt;p&gt;It is always a pay off to understand how character encoding scheme works. Computer only understands number. So there is a need to have a convention to convert from character to number and vice versa. In essence, a string is represented as a array of bytes. A byte can represent 256 values. So it was fine at the begining when only English characters are used in digital world. Each byte simply represent one character. But problem arised when another languages come in with all the different characters. 256 values are not enough to accommodate all of them.  &lt;br /&gt;
 &lt;/p&gt;
 &lt;p&gt;You might think of using the same number to represent different characters under different schemes. But that will limit the interchangable of documents and limit a document to contain characters from only one language. &lt;/p&gt;
 &lt;p&gt;Long story short, Unicode is a standard attempting to contain the alphabets for every human language. It does so by assigning an integer value (code point) to every alphabet. It is a document which maps every character (&lt;code&gt;LATIN SMALL LETTER A&lt;/code&gt;, for example) to a number (&lt;code&gt;0061&lt;/code&gt; in this case). &lt;/p&gt;
-&lt;p&gt;!! Unicode Encoding&lt;/p&gt;
+&lt;h2&gt;Unicode Encoding&lt;/h2&gt;
 &lt;p&gt;Remember computer stores string as an array of bytes? So how do we have a string of 8-bit values from code points? We use encoding. &lt;/p&gt;
 &lt;p&gt;There are a number of different encoding schemes. UTF-32, UTF-16, UTF-8. UTF-8 is the most widely used and supported encoding. It better utilizes memory spaces and and solved compatibilities problems, compared to other encoding like UTF-32. &lt;/p&gt;
 &lt;ul&gt;
@@ -19,7 +19,7 @@
 
 
 &lt;p&gt;The encoding of character to code point is handled by the Unicode standard. For the second step, any encoding scheme can be used besides UTF-8. Let's say if we use ASCII or ISO-8859-1, if string only contains code point below 128 or 255 respectively, we will have each byte as the same value of the code point. But it contains code point above these value, error will occur (program normally will throw exception).&lt;/p&gt;
-&lt;p&gt;!! Unicode in Python&lt;/p&gt;
+&lt;h2&gt;Unicode in Python&lt;/h2&gt;
 &lt;p&gt;In Python 2x, the default encoding is Extended ASCII. If you attempt to use a character with code point &amp;gt;= 256, exception will be thrown: &lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;chr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;40000&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;Traceback&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;most&lt;/span&gt; &lt;span class="n"&gt;recent&lt;/span&gt; &lt;span class="n"&gt;call&lt;/span&gt; &lt;span class="n"&gt;last&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;

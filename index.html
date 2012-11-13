@@ -81,12 +81,12 @@
         <p>In <a href="./category/Blog.html"><b>Blog</b></a></p>
         </header>
         <div class="entry-content">
-          <p>!! The Unicode Standard</p>
+          <h2>The Unicode Standard</h2>
 <p>It is always a pay off to understand how character encoding scheme works. Computer only understands number. So there is a need to have a convention to convert from character to number and vice versa. In essence, a string is represented as a array of bytes. A byte can represent 256 values. So it was fine at the begining when only English characters are used in digital world. Each byte simply represent one character. But problem arised when another languages come in with all the different characters. 256 values are not enough to accommodate all of them.  <br />
 </p>
 <p>You might think of using the same number to represent different characters under different schemes. But that will limit the interchangable of documents and limit a document to contain characters from only one language. </p>
 <p>Long story short, Unicode is a standard attempting to contain the alphabets for every human language. It does so by assigning an integer value (code point) to every alphabet. It is a document which maps every character (<code>LATIN SMALL LETTER A</code>, for example) to a number (<code>0061</code> in this case). </p>
-<p>!! Unicode Encoding</p>
+<h2>Unicode Encoding</h2>
 <p>Remember computer stores string as an array of bytes? So how do we have a string of 8-bit values from code points? We use encoding. </p>
 <p>There are a number of different encoding schemes. UTF-32, UTF-16, UTF-8. UTF-8 is the most widely used and supported encoding. It better utilizes memory spaces and and solved compatibilities problems, compared to other encoding like UTF-32. </p>
 <ul>
@@ -101,7 +101,7 @@
 
 
 <p>The encoding of character to code point is handled by the Unicode standard. For the second step, any encoding scheme can be used besides UTF-8. Let's say if we use ASCII or ISO-8859-1, if string only contains code point below 128 or 255 respectively, we will have each byte as the same value of the code point. But it contains code point above these value, error will occur (program normally will throw exception).</p>
-<p>!! Unicode in Python</p>
+<h2>Unicode in Python</h2>
 <p>In Python 2x, the default encoding is Extended ASCII. If you attempt to use a character with code point &gt;= 256, exception will be thrown: </p>
 <div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">chr</span><span class="p">(</span>40000<span class="p">)</span>
 <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
