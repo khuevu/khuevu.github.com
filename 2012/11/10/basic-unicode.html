@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Water Spinach</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="../../.././theme/css/main.css" type="text/css"/>
+    <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Water Spinach Atom Feed" />
+    
+    
+    <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <!--[if lte IE 7]>
+        <link rel="stylesheet" type="text/css" media="all" href="../../.././css/ie.css"/>
+        <script src="../../.././js/IE8.js" type="text/javascript"></script><![endif]-->
+
+    <!--[if lt IE 7]>
+         <link rel="stylesheet" type="text/css" media="all" href="../../.././css/ie6.css"/><![endif]-->
+
+        
+<script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-34233563-1']);
+    _gaq.push(['_trackPageview']);
+    _gaq.push(['_gat._anonymizeIp']);
+
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+</script>
+
+        
+  </head> 
+  <body id="index" class="home">
+    
+<a href="https://github.com/khuevu">
+
+<img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" />
+
+</a>
+
+    <!--Logo, site metadata and navigation menu-->
+    <header id="side" class="body">
+    <aside id="logo"><div><img src="../../.././theme/images/logo.jpg" width="210" height="140"/></div>
+    <hgroup>
+    <h1 id="title"><a href="../../../.">Water Spinach </a></h1>
+    <h2>Enough to fill the stomach</h2>
+    </hgroup>
+    </aside>  
+    <nav>
+        <ul class="menu">
+            
+            <li class="active"><a href="../../.././category/Blog.html">Blog</a></li>
+            
+            <li><a href="../../.././tags.html">Tags</a></li>
+            <li><a href="../../.././archive.html">Archive</a></li>
+            <li><a href="../../.././about.html">About</a></li>
+        </ul>
+    </nav>
+    <div id="credit">
+    Powered by <a href="http://pelican.notmyidea.org/">Pelican</a>
+    </div>
+    </header>
+    <!-- Content Block -->
+    
+<section id="content" class="body">
+  <article class="entry">
+  <header>
+    <h1 class="entry-title"> 
+      Character Encoding with Unicode
+    </h1>
+     <abbr class="published" title="2012-11-10T00:00:00">
+                Sat 10 November 2012
+     </abbr>
+     <p>In <a href="../../.././category/Blog.html"><b>Blog</b></a>   </p>
+
+  </header>
+    <div class="entry-content">
+      <p>!! The Unicode Standard</p>
+<p>It is always a pay off to understand how character encoding scheme works. Computer only understands number. So there is a need to have a convention to convert from character to number and vice versa. In essence, a string is represented as a array of bytes. A byte can represent 256 values. So it was fine at the begining when only English characters are used in digital world. Each byte simply represent one character. But problem arised when another languages come in with all the different characters. 256 values are not enough to accommodate all of them.  <br />
+</p>
+<p>You might think of using the same number to represent different characters under different schemes. But that will limit the interchangable of documents and limit a document to contain characters from only one language. </p>
+<p>Long story short, Unicode is a standard attempting to contain the alphabets for every human language. It does so by assigning an integer value (code point) to every alphabet. It is a document which maps every character (<code>LATIN SMALL LETTER A</code>, for example) to a number (<code>0061</code> in this case). </p>
+<p>!! Unicode Encoding</p>
+<p>Remember computer stores string as an array of bytes? So how do we have a string of 8-bit values from code points? We use encoding. </p>
+<p>There are a number of different encoding schemes. UTF-32, UTF-16, UTF-8. UTF-8 is the most widely used and supported encoding. It better utilizes memory spaces and and solved compatibilities problems, compared to other encoding like UTF-32. </p>
+<ul>
+<li>For code point below 128, it encodes as the corresponding byte value. The 1st 128 code points represent the same character set as in ASCII code.<br />
+</li>
+<li>For code point between 128 and 0x7ff, it encodes each code point by two byte values which are between 128 and 255</li>
+<li>For code point greater than 0x7ff, it uses 3 to 4 bytes which are between 128 and 255. </li>
+</ul>
+<p>To summarize, there are, in general, two steps in storing a character in computer: </p>
+<div class="codehilite"><pre><span class="n">Character</span> <span class="o">--&gt;</span> <span class="n">Integer</span> <span class="n">Value</span> <span class="p">(</span><span class="n">Code</span> <span class="n">point</span><span class="p">)</span> <span class="o">--&gt;</span> <span class="n">String</span> <span class="n">of</span> 8<span class="o">-</span><span class="n">bit</span> <span class="n">values</span>
+</pre></div>
+
+
+<p>The encoding of character to code point is handled by the Unicode standard. For the second step, any encoding scheme can be used besides UTF-8. Let's say if we use ASCII or ISO-8859-1, if string only contains code point below 128 or 255 respectively, we will have each byte as the same value of the code point. But it contains code point above these value, error will occur (program normally will throw exception).</p>
+<p>!! Unicode in Python</p>
+<p>In Python 2x, the default encoding is Extended ASCII. If you attempt to use a character with code point &gt;= 256, exception will be thrown: </p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">chr</span><span class="p">(</span>40000<span class="p">)</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+   <span class="n">File</span> &quot;<span class="o">&lt;</span><span class="n">stdin</span><span class="o">&gt;</span>&quot;<span class="p">,</span> <span class="n">line</span> 1<span class="p">,</span> <span class="n">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+   <span class="n">ValueError</span><span class="p">:</span> <span class="n">chr</span><span class="p">()</span> <span class="n">arg</span> <span class="n">not</span> <span class="n">in</span> <span class="n">range</span><span class="p">(</span>256<span class="p">)</span>
+</pre></div>
+
+
+<p>To get the unicode character in the above case:</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">unichr</span><span class="p">(</span>40000<span class="p">)</span>
+<span class="n">u</span><span class="o">&#39;\</span><span class="n">u9c40</span><span class="o">&#39;</span>
+</pre></div>
+
+
+<p>To create an unicode string, use this syntax:</p>
+<div class="codehilite"><pre><span class="n">s</span> <span class="p">=</span> <span class="n">u</span>&quot;<span class="n">a</span><span class="o">\</span><span class="n">xac</span><span class="o">\</span><span class="n">u1234</span><span class="o">\</span><span class="n">u20ac</span><span class="o">\</span><span class="n">U00008000</span>&quot;
+</pre></div>
+
+
+<p><code>u</code> denotes unicode string; <code>\x</code> for one byte character and <code>\u</code> for 2 byte character, <code>\U</code> for 4 byte character. </p>
+<p>Or create a Unicode string by decoding from a 8 bit string. For example: </p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">unicode</span><span class="p">(</span><span class="s">&#39;a\xc2\xac\xe1\x88\xb4\xe2\x82\xac\xe8\x80\x80&#39;</span><span class="p">,</span> <span class="s">&#39;utf-8&#39;</span><span class="p">)</span>
+<span class="n">u</span><span class="o">&#39;</span><span class="n">a</span><span class="o">\</span><span class="n">xac</span><span class="o">\</span><span class="n">u1234</span><span class="o">\</span><span class="n">u20ac</span><span class="o">\</span><span class="n">u8000</span><span class="o">&#39;</span>
+</pre></div>
+
+
+<p>Or: </p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="p">=</span> <span class="s">&#39;a\xc2\xac\xe1\x88\xb4\xe2\x82\xac\xe8\x80\x80&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">)</span>
+<span class="n">u</span><span class="o">&#39;</span><span class="n">a</span><span class="o">\</span><span class="n">xac</span><span class="o">\</span><span class="n">u1234</span><span class="o">\</span><span class="n">u20ac</span><span class="o">\</span><span class="n">u8000</span><span class="o">&#39;</span>
+</pre></div>
+
+
+<p>The correct encoding scheme used to decode need to speicify. Otherwise, python will use the default <code>ascii</code> encoding, which will throw the error: </p>
+<div class="codehilite"><pre><span class="s">&#39;ascii&#39;</span> <span class="n">codec</span> <span class="n">can</span><span class="o">&#39;</span><span class="n">t</span> <span class="n">decode</span> <span class="n">byte</span> 0<span class="n">xc2</span> <span class="n">in</span> <span class="n">position</span> 1<span class="p">:</span> <span class="n">ordinal</span> <span class="n">not</span> <span class="n">in</span> <span class="n">range</span><span class="p">(</span>128<span class="p">)</span>
+</pre></div>
+
+
+<p>In Python 3, the default encoding will be UTF-8. That means:
+<em>   All <code>str</code> object will be <code>unicode</code> object. No more <code>u'...'</code>.<br />
+</em>   Use <code>chr</code> instead of <code>unichr</code> for code point &gt; 128</p>
+    </div>
+    <footer>
+
+    <div class="post-info">
+<p>Tags: &nbsp;<a href="../../.././tag/encoding.html">encoding</a>&nbsp;&nbsp;<a href="../../.././tag/python.html">python</a>&nbsp;&nbsp;</p>
+
+</div><!-- /.post-info -->
+    
+<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="khuevu">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+
+    
+      <div class="comments"> 
+          <div id="disqus_thread"></div>
+          <script type="text/javascript">  
+            var disqus_identifier = "2012/11/10/basic-unicode.html";
+            (function() {
+              var dsq = document.createElement('script'); 
+              dsq.type = 'text/javascript';
+              dsq.async = true;
+              dsq.src = 'http://waterspinach.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+             })();
+          </script>
+      </div>
+      
+    </footer>
+  </article>
+</section>
+
+    <footer id="footer" class="body">
+      <address id="about">
+      </address>
+    </footer>
+    
+<script type="text/javascript">
+    var disqus_shortname = 'waterspinach';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+
+  </body>
+</html>
