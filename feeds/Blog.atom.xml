@@ -1,5 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Water Spinach</title><link href="/" rel="alternate"></link><link href="/feeds/Blog.atom.xml" rel="self"></link><id>/</id><updated>2013-01-22T00:00:00+08:00</updated><entry><title>Uploading file using Javascript</title><link href="/2013/01/22/fileupload-javascript.html" rel="alternate"></link><updated>2013-01-22T00:00:00+08:00</updated><author><name>Vu Minh Khue</name></author><id>tag:,2013-01-22:2013/01/22/fileupload-javascript.html</id><summary type="html">&lt;p&gt;A few months ago, I have written a &lt;a href="https://chrome.google.com/webstore/detail/social-snap/bnhlaifngpmodnnkpebagndhomlcnaed"&gt;chrome extension&lt;/a&gt; for instant sharing of captured content of a webpage to Facebook. So one of the requirement is that the captured image data is uploaded to Facebook. The familiar web flow of uploading a file to serverwould be presenting user with upload file form (html form with enctype="multipart/form-data") and let them select the file: &lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Water Spinach</title><link href="/" rel="alternate"></link><link href="/feeds/Blog.atom.xml" rel="self"></link><id>/</id><updated>2013-01-27T00:00:00+08:00</updated><entry><title>Application Design with Hibernate</title><link href="/2013/01/27/understand-hibernate.html" rel="alternate"></link><updated>2013-01-27T00:00:00+08:00</updated><author><name>Vu Minh Khue</name></author><id>tag:,2013-01-27:2013/01/27/understand-hibernate.html</id><summary type="html">&lt;p&gt;This article aims to discuss the basic design pattern of a web application using Hibernate; the basic concepts that you need to know well before actually implementing a Hibernate-based application. Hibernate Documentation can be a little bit confusing sometimes. This article tries to distill the important points to help you have a better understanding of Hibernate. And if you are already using Hibernate, hope it is still useful for you. Fundamentals always serves as building blocks for advanced techniques, an idea well illustrated in old time Chinese martial art movies. &lt;/p&gt;
+&lt;h2&gt;Hibernate's business case:&lt;/h2&gt;
+&lt;p&gt;Hibernate has &lt;code&gt;Session&lt;/code&gt; object as its persistence interface. All of the database operations can be invoked through the &lt;code&gt;Session&lt;/code&gt; object. This &lt;code&gt;Session&lt;/code&gt; object should be accessed from a single thread. How long a &lt;code&gt;Session&lt;/code&gt; object lives will be determined by your application design and its business use case. &lt;/p&gt;
+&lt;p&gt;Why? when designing a business application, operations are grouped into business transaction, in which, all operations are considered successfully executed only if none of them fail to execute. For example, in a online shopping application, operation to deduct the sold quality from available stock and operation of getting payment from customers are grouped into one transaction. Only when payment is made successfully, the former one is persisted. In other words, a business transaction coordinates the writing out of changes to affected data. Some data can only be meaningfully changed if other is changed too. And in Hibernate, a &lt;code&gt;Session&lt;/code&gt; represents exactly that, a business transaction or a &lt;code&gt;unit of work&lt;/code&gt;, a term used by &lt;a href="http://docs.jboss.org/hibernate/core/3.3/reference/en/html/transactions.html#transactions-locking"&gt;Hibernate documentation&lt;/a&gt;. In this article, we use the terms business transaction, unit of work, conversation interchangably. &lt;/p&gt;
+&lt;p&gt;Hibernate is mainly designed for web application. In which, A &lt;code&gt;Session&lt;/code&gt;, therefore, can span a request (session-per-request) or a conversation - multiple requests, response cycles (however, you should not keep the Session for a long conversion. We will discuss this later).&lt;br /&gt;
+&lt;/p&gt;
+&lt;p&gt;So how exactly a &lt;code&gt;Session&lt;/code&gt; is related to a business transaction, and why we need to decide how we keep the &lt;code&gt;Session&lt;/code&gt;? &lt;/p&gt;
+&lt;p&gt;A &lt;code&gt;Session&lt;/code&gt; is not only an abstract layer for your database operations, but also an objects cache. When an object is loaded from a &lt;code&gt;Session&lt;/code&gt;, Hibernate caches it in memory. This object is often called &lt;code&gt;managed object&lt;/code&gt;. A particular &lt;code&gt;Session&lt;/code&gt; always knows which objects it has loaded. When flush is called on this &lt;code&gt;Session&lt;/code&gt;, Hibernate check for modification on the object (dirty check) and the change made to the object, if any, is automatically flushed to database. &lt;/p&gt;
+&lt;p&gt;This mechanism is perfectly suitable for a match between a &lt;code&gt;Session&lt;/code&gt; and a business transaction. Change during a transaction is staged in memory - &lt;code&gt;Session&lt;/code&gt;'s cache. Change is persisted by flushing the change to database. If there is error, i.e, Hibernate throws exceptions, &lt;code&gt;Session&lt;/code&gt; object needs to be discarded, database changes need to be rolled back if necessary. A &lt;code&gt;Session&lt;/code&gt; also does version checking of managed object when updating to database to detect changes made to this data entity between the time it is loaded to memory and the time it is persisted back to database, which ensures the data integrity during a transaction. &lt;/p&gt;
+&lt;h2&gt;Hibernate's Design Pattern:&lt;/h2&gt;
+&lt;p&gt;From Hibernate &lt;a href="http://docs.jboss.org/hibernate/core/3.3/reference/en/html/transactions.html#transactions-basics"&gt;documentation&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;A Session is an inexpensive, non-threadsafe object that should be used once and then discarded for. A Session will not obtain a JDBC Connection, or a Datasource, unless it is needed. It will not consume any resources until used. &lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;A Hibernate Session can span multiple physical database transactions. Hibernate &lt;code&gt;Session&lt;/code&gt; will acquire a JDBC connection when transaction start. That means all communication with database must occur inside a transaction. When transaction is committed, Hibernate will release the collection. Typically, your data access code will be: &lt;/p&gt;
+&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Session&lt;/span&gt; &lt;span class="n"&gt;sess&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;factory&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;openSession&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;span class="n"&gt;Transaction&lt;/span&gt; &lt;span class="n"&gt;tx&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;tx&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sess&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;beginTransaction&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+    &lt;span class="c1"&gt;//do some work&lt;/span&gt;
+    &lt;span class="o"&gt;...&lt;/span&gt;
+    &lt;span class="n"&gt;tx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;commit&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Exception&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;tx&lt;/span&gt;&lt;span class="o"&gt;!=&lt;/span&gt;&lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;tx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;rollback&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+    &lt;span class="k"&gt;throw&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;finally&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;sess&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;close&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;The code above is simplest form to give you an idea of different steps handling a &lt;code&gt;Session&lt;/code&gt;. Usually, you should access the &lt;code&gt;Session&lt;/code&gt; object through &lt;code&gt;SessionFactory.getCurrentSession&lt;/code&gt;, or putting the transaction boiler plate code in a filter or AOP interceptor instead. &lt;/p&gt;
+&lt;p&gt;If, outside a transaction, you try to access a data object or its laizly initialized property (we will talk about it later) exception will be thrown by Hibernate. You will need to start DB transactions to write to DB or transactions to read only. That's why you might have several physical transactions over a Session - a business transaction. We will discuss these scenarios nextby considering some of the design pattern for Hibernate web application: &lt;/p&gt;
+&lt;h3&gt;Session per Request:&lt;/h3&gt;
+&lt;p&gt;Your business transaction spans only one request. For each thread that handles incoming request, a new &lt;code&gt;Session&lt;/code&gt; is opened and closed after processing is finished. &lt;/p&gt;
+&lt;p&gt;You might encountered a problem with this design. Your &lt;code&gt;Session&lt;/code&gt; object is normally closed when the main processing logic is completed but before your application renders view to return to client. When rendering view, some uninitialized data might need to retrieved for displayed; but the &lt;code&gt;Session&lt;/code&gt; is already closed. A typical scenario is displaying collection which is marked as &lt;code&gt;LazyInitialization&lt;/code&gt;. One feature of Hibernate is Lazy Loading. In ORM, relations between tables are represented as properties of collections in a object model. When retriveing the object from database, if the object's collection is lazy loaded, Hibernate defers the retrieval of the collection until being queried. It helps avoid overflow of available memory due to large collections. &lt;/p&gt;
+&lt;p&gt;The solution to this problem is keep the session open until the view rendered completely but just before the response is returned to client (&lt;code&gt;Open Session In View&lt;/code&gt;). Alternatively, you can have two DB transactions for one &lt;code&gt;Session&lt;/code&gt;. The first transaction is opened for main logic processing. Don't discard the &lt;code&gt;Session&lt;/code&gt; after that. The second transaction is a read only transaction started during rendering phase. You can find a very good article about these solutions &lt;a href="https://community.jboss.org/wiki/OpenSessionInView"&gt;here&lt;/a&gt;. &lt;/p&gt;
+&lt;h3&gt;Extended Session - Session per conversation&lt;/h3&gt;
+&lt;p&gt;Your business transaction spans multiple request-reply cycles. In this Extended Session pattern, you reused the &lt;code&gt;Session&lt;/code&gt; object between requests and only discard it when the unit of work complete. The &lt;code&gt;Session&lt;/code&gt; object is bind to the conversation by storing in the &lt;code&gt;HttpSession&lt;/code&gt;. The &lt;code&gt;Session&lt;/code&gt; should keep the transaction boundary within a request processing time:&lt;/p&gt;
+&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6
+7&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Session&lt;/span&gt; &lt;span class="n"&gt;session&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sessionFactory&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;openSession&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt; &lt;span class="c1"&gt;// Obtain new Session at the begining of unit of work. &lt;/span&gt;
+&lt;span class="n"&gt;session&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setFlushMode&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;FlushMode&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;NEVER&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;// IMPORTANT&lt;/span&gt;
+
+&lt;span class="n"&gt;Transaction&lt;/span&gt; &lt;span class="n"&gt;tx&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;session&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;beginTransaction&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt; &lt;span class="c1"&gt;//Obtain new JDBC Connection, start DB Transaction&lt;/span&gt;
+&lt;span class="n"&gt;Foo&lt;/span&gt; &lt;span class="n"&gt;foo&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;session&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Foo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt;
+&lt;span class="n"&gt;tx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;commit&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt; &lt;span class="c1"&gt;// release JDBC Connection during the unit of work. Waiting for user next request.&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;The &lt;code&gt;Session&lt;/code&gt; should be disconnectied from JDBC connection during user think time by calling &lt;code&gt;tx.commit()&lt;/code&gt;. Note that you need to set the &lt;code&gt;FlushMode&lt;/code&gt; to &lt;code&gt;NEVER&lt;/code&gt;. The &lt;code&gt;tx.commit()&lt;/code&gt; will auto flush the session otherwise. We are still in a unit of work (business transaction), thus we don't want to flush the cahnge to database yet. (I believe there is a bug in Hibernate documentation, in which it states that the &lt;code&gt;FlushMode.MANUAL&lt;/code&gt; will prevent the flushing when a transaction is committed. But the &lt;a href="http://docs.jboss.org/hibernate/orm/3.2/api/org/hibernate/Transaction.html"&gt;java doc&lt;/a&gt; says the former')&lt;/p&gt;
+&lt;p&gt;The next request within the same unit of work, the &lt;code&gt;Session&lt;/code&gt; object will open another database transaction: &lt;/p&gt;
+&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Transaction&lt;/span&gt; &lt;span class="n"&gt;tx&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;session&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;beginTransaction&lt;/span&gt; &lt;span class="c1"&gt;// same Session, obtain new JDBC Connection&lt;/span&gt;
+
+&lt;span class="c1"&gt;//previously loaded foo object. &lt;/span&gt;
+&lt;span class="n"&gt;foo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setProperty&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;bar&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+
+&lt;span class="n"&gt;tx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;commit&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;The &lt;code&gt;Session&lt;/code&gt; knows the foo object is the one it loaded previously. At the last transaction in the conversation, we flush the change to database and discard the &lt;code&gt;Session&lt;/code&gt;: &lt;/p&gt;
+&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;session&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;flush&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;span class="n"&gt;tx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;commit&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;span class="n"&gt;session&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;close&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;Change made to the foo object will be flushed to database. This approach is efficient in database access. No resource is used until needed. Refer to this &lt;a href="https://community.jboss.org/wiki/OpenSessionInView#What_about_the_extended_Session_pattern_for_long_Conversations"&gt;article&lt;/a&gt; for more details. &lt;/p&gt;
+&lt;p&gt;And you should never have a long transaction spanning the whole conversation. Having a long database transaction not only hogs resource but also leads to stale data due to concurrent access. StaleObjectStateException will be thrown. It prevents your application to scale concurrently. (Do note that within a thread, a single database transaction is going to perform better than many small transactions, &lt;a href="http://docs.jboss.org/hibernate/core/3.3/reference/en/html/transactions.html#transactions-demarcation"&gt;even for reading data&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;This pattern, however, is not suitable for a long conversation. With loaded objects kept in memory, you will soon run hit OutOfMemory error if you keep the &lt;code&gt;Session&lt;/code&gt; for too long. So for a long conversation, we use an alternative approach. &lt;/p&gt;
+&lt;h3&gt;Detached Session - For long conversation&lt;/h3&gt;
+&lt;p&gt;To keep memory from overflowing during a long conversation, we use a new session for each user interaction. In this pattern, the staging change will be kept by mean of persistent objects. The managed objects that change is made directly to. You keep these objects between interactions, detach them from old &lt;code&gt;Session&lt;/code&gt; when it is closed and re-attach them to the new &lt;code&gt;Session&lt;/code&gt;. So the persistent objects are ones that are kept within &lt;code&gt;HttpSession&lt;/code&gt; 's context within a unit of work. You can re-attach an object by calling &lt;code&gt;Session&lt;/code&gt;'s &lt;code&gt;merge&lt;/code&gt; or &lt;code&gt;saveOrUpdate&lt;/code&gt;:&lt;/p&gt;
+&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// foo is an instance loaded by a previous Session&lt;/span&gt;
+&lt;span class="n"&gt;foo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setProperty&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;bar&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+
+&lt;span class="n"&gt;session&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;factory&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;openSession&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt; &lt;span class="c1"&gt;// open new session&lt;/span&gt;
+&lt;span class="n"&gt;Transaction&lt;/span&gt; &lt;span class="n"&gt;tx&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;session&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;beginTransaction&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+
+&lt;span class="n"&gt;session&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;saveOrUpdate&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;foo&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;// Use merge() if &amp;quot;foo&amp;quot; might have been loaded already&lt;/span&gt;
+
+&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;commit&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;span class="n"&gt;session&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;close&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;h2&gt;Hibernate Integration&lt;/h2&gt;
+&lt;p&gt;In practice, we don't often need to write our own transaction code. We use Hibernate or Spring's HibernateTransactionManager instead. These transaction managers wrap a transaction around method invokation, which requires database accesses. But in essense, they are all doing the same thing as described above: obtain a session, start the transaction, flush the session if needed, commit the transaction, discard the session if needed; roll back transaction and discard session if exception is thrown. &lt;/p&gt;
+&lt;p&gt;Transaction's boundary can be defined using annotation or clear &lt;a href="https://community.jboss.org/wiki/SessionHandlingWithAOP"&gt;point cut (AOP)&lt;/a&gt;; transactions can be nested; A business transaction might not involve only Hibernate's transaction but other resources' transactions as well; nested transactions. We will discuss these matters in next article on hibernate. &lt;/p&gt;</summary><category term="hibernate"></category><category term="java"></category></entry><entry><title>Uploading file using Javascript</title><link href="/2013/01/22/fileupload-javascript.html" rel="alternate"></link><updated>2013-01-22T00:00:00+08:00</updated><author><name>Vu Minh Khue</name></author><id>tag:,2013-01-22:2013/01/22/fileupload-javascript.html</id><summary type="html">&lt;p&gt;A few months ago, I have written a &lt;a href="https://chrome.google.com/webstore/detail/social-snap/bnhlaifngpmodnnkpebagndhomlcnaed"&gt;chrome extension&lt;/a&gt; for instant sharing of captured content of a webpage to Facebook. So one of the requirement is that the captured image data is uploaded to Facebook. The familiar web flow of uploading a file to serverwould be presenting user with upload file form (html form with enctype="multipart/form-data") and let them select the file: &lt;/p&gt;
 &lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2
 3
