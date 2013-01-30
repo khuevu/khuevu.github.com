@@ -62,13 +62,17 @@ The solution to this problem is keep the session open until the view rendered co
 Your business transaction spans multiple request-reply cycles. In this Extended Session pattern, you reused the `Session` object between requests and only discard it when the unit of work complete. The `Session` object is bind to the conversation by storing in the `HttpSession`. The `Session` should keep the transaction boundary within a request processing time:
 
     #!java
-    Session session = sessionFactory.openSession(); // Obtain new Session at the begining of unit of work. 
+    // Obtain new Session at the begining of unit of work.
+    Session session = sessionFactory.openSession();  
     session.setFlushMode(FlushMode.NEVER); // IMPORTANT
     
-    Transaction tx = session.beginTransaction(); //Obtain new JDBC Connection, start DB Transaction
+    //Obtain new JDBC Connection, start DB Transaction
+    Transaction tx = session.beginTransaction(); 
     Foo foo = session.get(Foo.class, id);
     ...
-    tx.commit(); // release JDBC Connection during the unit of work. Waiting for user next request. 
+    // release JDBC Connection during the unit of work. Waiting for user next request.
+    tx.commit(); 
+     
     
 The `Session` should be disconnectied from JDBC connection during user think time by calling `tx.commit()`. Note that you need to set the `FlushMode` to `NEVER`. The `tx.commit()` will auto flush the session otherwise. We are still in a unit of work (business transaction), thus we don't want to flush the cahnge to database yet. (I believe there is a bug in Hibernate documentation, in which it states that the `FlushMode.MANUAL` will prevent the flushing when a transaction is committed. But the [java doc](http://docs.jboss.org/hibernate/orm/3.2/api/org/hibernate/Transaction.html) says the former')
 

@@ -135,19 +135,25 @@
 <p>The solution to this problem is keep the session open until the view rendered completely but just before the response is returned to client (<code>Open Session In View</code>). Alternatively, you can have two DB transactions for one <code>Session</code>. The first transaction is opened for main logic processing. Don't discard the <code>Session</code> after that. The second transaction is a read only transaction started during rendering phase. You can find a very good article about these solutions <a href="https://community.jboss.org/wiki/OpenSessionInView">here</a>. </p>
 <h3>Extended Session - Session per conversation</h3>
 <p>Your business transaction spans multiple request-reply cycles. In this Extended Session pattern, you reused the <code>Session</code> object between requests and only discard it when the unit of work complete. The <code>Session</code> object is bind to the conversation by storing in the <code>HttpSession</code>. The <code>Session</code> should keep the transaction boundary within a request processing time:</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7</pre></div></td><td class="code"><div class="codehilite"><pre><span class="n">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">sessionFactory</span><span class="o">.</span><span class="na">openSession</span><span class="o">();</span> <span class="c1">// Obtain new Session at the begining of unit of work. </span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="codehilite"><pre><span class="c1">// Obtain new Session at the begining of unit of work.</span>
+<span class="n">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">sessionFactory</span><span class="o">.</span><span class="na">openSession</span><span class="o">();</span>  
 <span class="n">session</span><span class="o">.</span><span class="na">setFlushMode</span><span class="o">(</span><span class="n">FlushMode</span><span class="o">.</span><span class="na">NEVER</span><span class="o">);</span> <span class="c1">// IMPORTANT</span>
 
-<span class="n">Transaction</span> <span class="n">tx</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">();</span> <span class="c1">//Obtain new JDBC Connection, start DB Transaction</span>
+<span class="c1">//Obtain new JDBC Connection, start DB Transaction</span>
+<span class="n">Transaction</span> <span class="n">tx</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">();</span> 
 <span class="n">Foo</span> <span class="n">foo</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">Foo</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">id</span><span class="o">);</span>
 <span class="o">...</span>
-<span class="n">tx</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span> <span class="c1">// release JDBC Connection during the unit of work. Waiting for user next request.</span>
+<span class="c1">// release JDBC Connection during the unit of work. Waiting for user next request.</span>
+<span class="n">tx</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
 </pre></div>
 </td></tr></table>
 
