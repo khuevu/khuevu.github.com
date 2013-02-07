@@ -11,29 +11,37 @@ While other smartphone OSes might also support the deployment of web apps, Firef
 I have tried buiding and flashing Firefox OS into my Galaxy Nexus phone. Here are the screenshots:
 
 ![Lock Screen](./images/firefoxos1.jpg)
+
 *Lock Screen*
 
 ![Setting](./images/firefoxos2.jpg)
+
 *Standard setting screen with `Do not track` option*
 
 ![Notification Bar](./images/firefoxos5.jpg)
+
 *Notification Bar as in Android*
 
 ![Swipe](./images/firefoxos6.jpg)
+
 *From home screen, you swipe left or right to access app icons or market places*
 
 Apps are pre-grouped into different categories like `social`, `news`... As you can see, the graphic doesn't scale very well to match the screen size. 
 
 ![News](./images/firefoxos7-0.jpg)
+
 *News Group*
 
 ![Contact View](./images/firefoxos3-1.jpg)
+
 *Contact view*
 
 ![Market Place](./images/firefoxos8.jpg)
+
 *Market Place*
 
 ![Facebook](./images/firefoxos7-1.jpg)
+
 *Inside an app*
 
 The overall experience is that it is still buggy and slow. My experience is short-live as there is a bug in which Firefox OS doesn't support soft buttons for phone without hardware button. So I have no way to go back to home screen other than restart the phone. If you up to the challenge and believe in the future of Firefox OS, you should try fixing this bug. 
