@@ -4,7 +4,8 @@
     <title>Water Spinach - python</title>
     <meta charset="utf-8"/>
     <link rel="stylesheet" href=".././theme/css/main.css" type="text/css"/>
-    <link href="/" type="application/atom+xml" rel="alternate" title="Water Spinach Atom Feed" />
+    <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,900,400italic,700italic">
+    <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Water Spinach Atom Feed" />
     
     
     <!--[if IE]>
@@ -36,13 +37,13 @@
         
   </head> 
   <body id="index" class="home">
-    
+    <!--
 <a href="https://github.com/khuevu">
 
 <img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" />
 
 </a>
-
+-->
     <!--Logo, site metadata and navigation menu-->
     <header id="side" class="body">
     <aside id="logo"><div><img src=".././theme/images/logo.jpg" width="210" height="140"/></div>
@@ -71,6 +72,9 @@
 
 <ol id="posts" class="hfeed" start="9">
   
+
+    
+
     <li>
       <article class="entry">
         <header>
@@ -78,8 +82,9 @@
         <abbr class="published" title="2012-11-10T00:00:00">
                 Sat 10 November 2012
         </abbr>
-        <p>In <a href=".././category/Blog.html"><b>Blog</b></a></p>
+        <!--<p>In <a href=".././category/Blog.html"><b>Blog</b></a></p>-->
         </header>
+
         <div class="entry-content">
           <h2>The Unicode Standard</h2>
 <p>It is always a pay off to understand how character encoding scheme works. Computer only understands number. So there is a need to have a convention to convert from character to number and vice versa. In essence, a string is represented as a array of bytes. A byte can represent 256 values. So it was fine at the begining when only English characters are used in digital world. Each byte simply represent one character. But problem arised when another languages come in with all the different characters. 256 values are not enough to accommodate all of them.  <br />
@@ -144,151 +149,83 @@
 <em>   All <code>str</code> object will be <code>unicode</code> object. No more <code>u'...'</code>.<br />
 </em>   Use <code>chr</code> instead of <code>unichr</code> for code point &gt; 128</p>
         </div>
+
         <footer>
           <div class="post-info">
 <p>Tags: &nbsp;<a href=".././tag/encoding.html">encoding</a>&nbsp;&nbsp;<a href=".././tag/python.html">python</a>&nbsp;&nbsp;</p>
 
 </div><!-- /.post-info -->
-          
+          <!--
 <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="khuevu">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-
-          <p>There are <a href=".././2012/11/10/basic-unicode.html#disqus_thread">comments</a>.</p>
+-->
+          <p><a href=".././2012/11/10/basic-unicode.html#disqus_thread">Comments</a>.</p>
         </footer>
       </article>
     </li>
+
+    
     
   
+
+    
+
     <li>
       <article class="entry">
-        <header>
-        <h1 class="entry-title"><a href=".././2012/09/17/http-tunnel.html">Tunnel TCP through HTTP - A Python Implementation</a></h1>
+
+      <header> 
+      <h1 class="entry-title"><a href=".././2012/09/17/http-tunnel.html">Tunnel TCP through HTTP - A Python Implementation</a></h1>
         <abbr class="published" title="2012-09-17T00:00:00">
                 Mon 17 September 2012
         </abbr>
-        <p>In <a href=".././category/Blog.html"><b>Blog</b></a></p>
-        </header>
-        <div class="entry-content">
-          <p>Sometimes you find yourself behind a restrictive firewall. It blocks any request with destination port other than 80. You can do little thing like browsing websites. </p>
-<p>The solution, if you want to access an application at other ports, is to direct your traffic to a server outside the firewall listening at port 80. The server then forwards the data to your desired destination. It also returns any response from that destination, i.e, <code>tunneling</code>. </p>
-<p>The tunneling can leverage on existing protocol, like HTTP. I have written a simple tunnel program in Python. It contains two components, tunnel client and tunnel server. </p>
-<h3>Tunnel Server</h3>
-<p>It is basically a HTTP server which should resides on the host machine outside the firewall. When the server received a request from client, it relies on the request's HTTP method to start the respective action sequence: </p>
-<ul>
-<li>POST method: Signal a new connection. Send server the host and port of the target address. Server will establish a TCP connection with the target address.</li>
-<li>PUT method: Signal write request. Server gets data from request's payload and send to target through the established TCP connection. </li>
-<li>GET method: Signal read request. Server get data from target and send back to client as HTTP Response. </li>
-<li>DELETE method: Signal end of connection. Server closes the TCP Connection with target.<br />
-</li>
-</ul>
-<p>You can start the server with command: </p>
-<div class="codehilite"><pre>$<span class="n">python</span> <span class="n">tunneld</span><span class="p">.</span><span class="n">py</span> <span class="o">-</span><span class="n">p</span> 80
-</pre></div>
+        <!--<p>In <a href=".././category/Blog.html"><b>Blog</b></a></p>-->
+      </header>
 
+      <div class="entry-content">
+        <p>Sometimes you find yourself behind a restrictive firewall. It blocks any request with destination port other than 80. You can do little thing like browsing websites. </p>
+<p>The solution, if you want to access an application at other ports, is to direct your traffic to a server outside the firewall listening ...</p>
+        <p class="readmore">
+        <a href=".././2012/09/17/http-tunnel.html"><b>Read more</b></a>
+        </p>
+      </div>
 
-<p>The default port server listens to is 9999. Type <code>python tunneld.py -h</code> for help messages. </p>
-<h3>Tunnel Client</h3>
-<p>Tunnel Client resides on your local machine or any machine within the firewall. It follows the above mentioned protocol to talk to the Tunnel Server. It spawns separate threads to send and receive data from server (through HTTP PUT and GET respectively) and forward back to the local machine through socket.<br />
-</p>
-<p>To start the client: </p>
-<div class="codehilite"><pre>$<span class="n">python</span> <span class="n">tunnel</span><span class="p">.</span><span class="n">py</span> <span class="p">[</span><span class="n">target_host</span><span class="p">]:[</span><span class="n">target_port</span><span class="p">]</span>
-</pre></div>
+      <footer>
 
-
-<h3>Testing</h3>
-<p>To test the Tunnel, for example, tunneling IRC connection, we use linux <code>nc</code> command: </p>
-<p>First, start the tunnel service:</p>
-<div class="codehilite"><pre>$<span class="n">python</span> <span class="n">tunneld</span><span class="p">.</span><span class="n">py</span> <span class="o">-</span><span class="n">p</span> 80
-$<span class="n">python</span> <span class="n">tunnel</span><span class="p">.</span><span class="n">py</span> <span class="o">-</span><span class="n">p</span> 8889 <span class="o">-</span><span class="n">h</span> <span class="n">localhost</span><span class="p">:</span>80 <span class="n">irc</span><span class="p">.</span><span class="n">freenode</span><span class="p">.</span><span class="n">net</span><span class="p">:</span>6667
-</pre></div>
-
-
-<p>Connect to the client using <code>nc</code> and send IRC messages: </p>
-<div class="codehilite"><pre>$<span class="n">nc</span> <span class="n">localhost</span> 8889 
-<span class="n">NICK</span> <span class="n">abcxyz</span>
-<span class="n">USER</span> <span class="n">abcxyz</span> <span class="n">abcxyz</span> <span class="n">irc</span><span class="p">.</span><span class="n">freenode</span><span class="p">.</span><span class="n">net</span> <span class="p">:</span><span class="n">abcxyz</span>
-</pre></div>
-
-
-<p>Result: </p>
-<div class="codehilite"><pre><span class="p">:</span><span class="n">calvino</span><span class="p">.</span><span class="n">freenode</span><span class="p">.</span><span class="n">net</span> <span class="n">NOTICE</span> <span class="o">*</span> <span class="p">:</span><span class="o">***</span> <span class="n">Looking</span> <span class="n">up</span> <span class="n">your</span> <span class="n">hostname</span><span class="p">...</span>
-<span class="p">:</span><span class="n">calvino</span><span class="p">.</span><span class="n">freenode</span><span class="p">.</span><span class="n">net</span> <span class="n">NOTICE</span> <span class="o">*</span> <span class="p">:</span><span class="o">***</span> <span class="n">Checking</span> <span class="n">Ident</span>
-<span class="p">:</span><span class="n">calvino</span><span class="p">.</span><span class="n">freenode</span><span class="p">.</span><span class="n">net</span> <span class="n">NOTICE</span> <span class="o">*</span> <span class="p">:</span><span class="o">***</span> <span class="n">Found</span> <span class="n">your</span> <span class="n">hostname</span>
-<span class="p">:</span><span class="n">calvino</span><span class="p">.</span><span class="n">freenode</span><span class="p">.</span><span class="n">net</span> <span class="n">NOTICE</span> <span class="o">*</span> <span class="p">:</span><span class="o">***</span> <span class="n">No</span> <span class="n">Ident</span> <span class="n">response</span>
-<span class="n">NICK</span> <span class="n">abcxyz</span>
-<span class="n">USER</span> <span class="n">abcxyz</span> <span class="n">abcxyz</span> <span class="n">irc</span><span class="p">.</span><span class="n">freenode</span><span class="p">.</span><span class="n">net</span> <span class="p">:</span><span class="n">abcxyz</span>
-<span class="p">:</span><span class="n">calvino</span><span class="p">.</span><span class="n">freenode</span><span class="p">.</span><span class="n">net</span> 001 <span class="n">abcxyz</span> <span class="p">:</span><span class="n">Welcome</span> <span class="n">to</span> <span class="n">the</span> <span class="n">freenode</span> <span class="n">Internet</span> <span class="n">Relay</span> <span class="n">Chat</span> <span class="n">Network</span> <span class="n">abcxyz</span>
-<span class="p">:</span><span class="n">calvino</span><span class="p">.</span><span class="n">freenode</span><span class="p">.</span><span class="n">net</span> 002 <span class="n">abcxyz</span> <span class="p">:</span><span class="n">Your</span> <span class="n">host</span> <span class="n">is</span> <span class="n">calvino</span><span class="p">.</span><span class="n">freenode</span><span class="p">.</span><span class="n">net</span><span class="p">[</span>213<span class="p">.</span>92<span class="p">.</span>8<span class="p">.</span>4<span class="o">/</span>6667<span class="p">],</span> <span class="n">running</span> <span class="n">version</span> <span class="n">ircd</span><span class="o">-</span><span class="n">seven</span><span class="o">-</span>1<span class="p">.</span>1<span class="p">.</span>3
-<span class="p">:</span><span class="n">calvino</span><span class="p">.</span><span class="n">freenode</span><span class="p">.</span><span class="n">net</span> 003 <span class="n">abcxyz</span> <span class="p">:</span><span class="n">This</span> <span class="n">server</span> <span class="n">was</span> <span class="n">created</span> <span class="n">Sun</span> <span class="n">Dec</span> 4 2011 <span class="n">at</span> 14<span class="p">:</span>42<span class="p">:</span>47 <span class="n">CET</span>
-<span class="p">:</span><span class="n">calvino</span><span class="p">.</span><span class="n">freenode</span><span class="p">.</span><span class="n">net</span> 004 <span class="n">abcxyz</span> <span class="n">calvino</span><span class="p">.</span><span class="n">freenode</span><span class="p">.</span><span class="n">net</span> <span class="n">ircd</span><span class="o">-</span><span class="n">seven</span><span class="o">-</span>1<span class="p">.</span>1<span class="p">.</span>3 <span class="n">DOQRSZaghilopswz</span> <span class="n">CFILMPQbcefgijklmnopqrstvz</span> <span class="n">bkloveqjfI</span>
-<span class="p">:</span><span class="n">calvino</span><span class="p">.</span><span class="n">freenode</span><span class="p">.</span><span class="n">net</span> 005 <span class="n">abcxyz</span> <span class="n">CHANTYPES</span><span class="p">=</span># <span class="n">EXCEPTS</span> <span class="n">INVEX</span> <span class="n">CHANMODES</span><span class="p">=</span><span class="n">eIbq</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">flj</span><span class="p">,</span><span class="n">CFLMPQcgimnprstz</span> <span class="n">CHANLIMIT</span><span class="p">=</span>#<span class="p">:</span>120 <span class="n">PREFIX</span><span class="p">=(</span><span class="n">ov</span><span class="p">)@</span><span class="o">+</span> <span class="n">MAXLIST</span><span class="p">=</span><span class="n">bqeI</span><span class="p">:</span>100 <span class="n">MODES</span><span class="p">=</span>4 <span class="n">NETWORK</span><span class="p">=</span><span class="n">freenode</span> <span class="n">KNOCK</span> <span class="n">STATUSMSG</span><span class="p">=@</span><span class="o">+</span> <span class="n">CALLERID</span><span class="p">=</span><span class="n">g</span> <span class="p">:</span><span class="n">are</span> <span class="n">supported</span> <span class="n">by</span> <span class="n">this</span> <span class="n">server</span>
-<span class="p">:</span><span class="n">calvino</span><span class="p">.</span><span class="n">freenode</span><span class="p">.</span><span class="n">net</span> 005 <span class="n">abcxyz</span> <span class="n">CASEMAPPING</span><span class="p">=</span><span class="n">rfc1459</span> <span class="n">CHARSET</span><span class="p">=</span><span class="n">ascii</span> <span class="n">NICKLEN</span><span class="p">=</span>16 <span class="n">CHANNELLEN</span><span class="p">=</span>50 <span class="n">TOPICLEN</span><span class="p">=</span>390 <span class="n">ETRACE</span> <span class="n">CPRIVMSG</span> <span class="n">CNOTICE</span> <span class="n">DEAF</span><span class="p">=</span><span class="n">D</span> <span class="n">MONITOR</span><span class="p">=</span>100 <span class="n">FNC</span> <span class="n">TARGMAX</span><span class="p">=</span><span class="n">NAMES</span><span class="p">:</span>1<span class="p">,</span><span class="n">LIST</span><span class="p">:</span>1<span class="p">,</span><span class="n">KICK</span><span class="p">:</span>1<span class="p">,</span><span class="n">WHOIS</span><span class="p">:</span>1<span class="p">,</span><span class="n">PRIVMSG</span><span class="p">:</span>4<span class="p">,</span><span class="n">NOTICE</span><span class="p">:</span>4<span class="p">,</span><span class="n">ACCEPT</span><span class="p">:,</span><span class="n">MONITOR</span><span class="p">:</span> <span class="p">:</span><span class="n">are</span> <span class="n">supported</span> <span class="n">by</span> <span class="n">this</span> <span class="n">server</span>
-<span class="p">:</span><span class="n">calvino</span><span class="p">.</span><span class="n">freenode</span><span class="p">.</span><span class="n">net</span> 005 <span class="n">abcxyz</span> <span class="n">EXTBAN</span><span class="p">=</span>$<span class="p">,</span><span class="n">arx</span> <span class="n">WHOX</span> <span class="n">CLIENTVER</span><span class="p">=</span>3<span class="p">.</span>0 <span class="n">SAFELIST</span> <span class="n">ELIST</span><span class="p">=</span><span class="n">CTU</span> <span class="p">:</span><span class="n">are</span> <span class="n">supported</span> <span class="n">by</span> <span class="n">this</span> <span class="n">server</span>
-<span class="p">:</span><span class="n">calvino</span><span class="p">.</span><span class="n">freenode</span><span class="p">.</span><span class="n">net</span> 251 <span class="n">abcxyz</span> <span class="p">:</span><span class="n">There</span> <span class="n">are</span> 232 <span class="n">users</span> <span class="n">and</span> 70582 <span class="n">invisible</span> <span class="n">on</span> 31 <span class="n">servers</span>
-<span class="p">:</span><span class="n">calvino</span><span class="p">.</span><span class="n">freenode</span><span class="p">.</span><span class="n">net</span> 252 <span class="n">abcxyz</span> 45 <span class="p">:</span><span class="n">IRC</span> <span class="n">Operators</span> <span class="n">online</span>
-<span class="p">:</span><span class="n">calvino</span><span class="p">.</span><span class="n">freenode</span><span class="p">.</span><span class="n">net</span> 253 <span class="n">abcxyz</span> 10 <span class="p">:</span><span class="n">unknown</span> <span class="n">connection</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
-<span class="p">:</span><span class="n">calvino</span><span class="p">.</span><span class="n">freenode</span><span class="p">.</span><span class="n">net</span> 254 <span class="n">abcxyz</span> 34513 <span class="p">:</span><span class="n">channels</span> <span class="n">formed</span>
-<span class="p">:</span><span class="n">calvino</span><span class="p">.</span><span class="n">freenode</span><span class="p">.</span><span class="n">net</span> 255 <span class="n">abcxyz</span> <span class="p">:</span><span class="n">I</span> <span class="n">have</span> 6757 <span class="n">clients</span> <span class="n">and</span> 1 <span class="n">servers</span>
-<span class="p">:</span><span class="n">calvino</span><span class="p">.</span><span class="n">freenode</span><span class="p">.</span><span class="n">net</span> 265 <span class="n">abcxyz</span> 6757 10768 <span class="p">:</span><span class="n">Current</span> <span class="n">local</span> <span class="n">users</span> 6757<span class="p">,</span> <span class="n">max</span> 10768
-<span class="p">:</span><span class="n">calvino</span><span class="p">.</span><span class="n">freenode</span><span class="p">.</span><span class="n">net</span> 266 <span class="n">abcxyz</span> 70814 83501 <span class="p">:</span><span class="n">Current</span> <span class="k">global</span> <span class="n">users</span> 70814<span class="p">,</span> <span class="n">max</span> 83501
-<span class="p">:</span><span class="n">calvino</span><span class="p">.</span><span class="n">freenode</span><span class="p">.</span><span class="n">net</span> 250 <span class="n">abcxyz</span> <span class="p">:</span><span class="n">Highest</span> <span class="n">connection</span> <span class="n">count</span><span class="p">:</span> 10769 <span class="p">(</span>10768 <span class="n">clients</span><span class="p">)</span> <span class="p">(</span>2194912 <span class="n">connections</span> <span class="n">received</span><span class="p">)</span>
-    <span class="p">...</span>
-</pre></div>
-
-
-<h3>It needs not be HTTP</h3>
-<p>Here I use tunneling tcp packages through HTTP protocol. It is an existing protocol, which gives the reusability to the program. But you can implement your own program on top of the tunneling TCP Connection. You just need to define your own application layer protocol on how the two end of the tunnel communicate, i.e, when to start sending data, when the data ends...</p>
-<p>You can access the source code of the program <a href="https://github.com/khuevu/http-tunnel">here</a></p>
-        </div>
-        <footer>
-          <div class="post-info">
-<p>Tags: &nbsp;<a href=".././tag/http.html">http</a>&nbsp;&nbsp;<a href=".././tag/tcp.html">tcp</a>&nbsp;&nbsp;<a href=".././tag/tunneling.html">tunneling</a>&nbsp;&nbsp;<a href=".././tag/python.html">python</a>&nbsp;&nbsp;</p>
-
-</div><!-- /.post-info -->
-          
-<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="khuevu">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-
-          <p>There are <a href=".././2012/09/17/http-tunnel.html#disqus_thread">comments</a>.</p>
-        </footer>
+      </footer>
       </article>
     </li>
     
+    
   
+
+    
+
     <li>
       <article class="entry">
-        <header>
-        <h1 class="entry-title"><a href=".././2012/09/13/bouncing-balls.html">Bouncing Balls with Pygame</a></h1>
+
+      <header> 
+      <h1 class="entry-title"><a href=".././2012/09/13/bouncing-balls.html">Bouncing Balls with Pygame</a></h1>
         <abbr class="published" title="2012-09-13T00:00:00">
                 Thu 13 September 2012
         </abbr>
-        <p>In <a href=".././category/Blog.html"><b>Blog</b></a></p>
-        </header>
-        <div class="entry-content">
-          <p><img alt="Bouncing Balls with Pygame" src="../static/images/bouncingballs.png" /></p>
+        <!--<p>In <a href=".././category/Blog.html"><b>Blog</b></a></p>-->
+      </header>
+
+      <div class="entry-content">
+        <p><img alt="Bouncing Balls with Pygame" src="../static/images/bouncingballs.png" /></p>
 <p>I have recently played around with Pygame module. It was a fun experience. I decided to use Pygame to write a simple classic bouncing balls simulation.</p>
 <p>You can have a look at the code <a href="https://github.com/khuevu/pygames/tree/master/bouncingball">here</a></p>
-<p>The Ball object has methods to detect collisions with walls and other balls; callable method <code>update()</code> to update its position and method <code>draw</code> to redraw. BallWorld is the Game object containing game logics. It contains the list of balls, loop through all balls to update their positions each refresh.<br />
-</p>
-<p>A few things to note: </p>
-<ul>
-<li>Each ball object has a <code>CollisionResponse</code> object. <code>CollisionResponse</code> object contains information on the coming collision: new speed, direction. If the ball is not likely to collide at the moment (not going to collide within a very small EPSILON time), the collision time will be set to infinity.</li>
-<li>Positions of ball objects will be calculated at a fixed time interval (<code>TimeStep</code>) to calibrate ball movements per frame refresh. </li>
-<li>The use of EPSILON number to estimate comparison as we will not have exact numbers when calculating with float type</li>
-</ul>
-<p>Have fun !. </p>
-<p>Ah, well, it is not actually a game per se, but it is fun to watch all the balls bouncing. You can try to adjust the number of balls, speeds, etc...</p>
-        </div>
-        <footer>
-          <div class="post-info">
-<p>Tags: &nbsp;<a href=".././tag/python.html">python</a>&nbsp;&nbsp;<a href=".././tag/pygame.html">pygame</a>&nbsp;&nbsp;</p>
+<p>The Ball object has methods to detect collisions with walls and other balls; callable method ...</p>
+        <p class="readmore">
+        <a href=".././2012/09/13/bouncing-balls.html"><b>Read more</b></a>
+        </p>
+      </div>
 
-</div><!-- /.post-info -->
-          
-<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="khuevu">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <footer>
 
-          <p>There are <a href=".././2012/09/13/bouncing-balls.html#disqus_thread">comments</a>.</p>
-        </footer>
+      </footer>
       </article>
     </li>
+    
     
   
   </ol>

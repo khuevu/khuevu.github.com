@@ -4,7 +4,8 @@
     <title>Water Spinach - optimization</title>
     <meta charset="utf-8"/>
     <link rel="stylesheet" href=".././theme/css/main.css" type="text/css"/>
-    <link href="/" type="application/atom+xml" rel="alternate" title="Water Spinach Atom Feed" />
+    <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,900,400italic,700italic">
+    <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Water Spinach Atom Feed" />
     
     
     <!--[if IE]>
@@ -36,13 +37,13 @@
         
   </head> 
   <body id="index" class="home">
-    
+    <!--
 <a href="https://github.com/khuevu">
 
 <img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" />
 
 </a>
-
+-->
     <!--Logo, site metadata and navigation menu-->
     <header id="side" class="body">
     <aside id="logo"><div><img src=".././theme/images/logo.jpg" width="210" height="140"/></div>
@@ -71,6 +72,9 @@
 
 <ol id="posts" class="hfeed" start="9">
   
+
+    
+
     <li>
       <article class="entry">
         <header>
@@ -78,8 +82,9 @@
         <abbr class="published" title="2012-09-13T00:00:00">
                 Thu 13 September 2012
         </abbr>
-        <p>In <a href=".././category/Blog.html"><b>Blog</b></a></p>
+        <!--<p>In <a href=".././category/Blog.html"><b>Blog</b></a></p>-->
         </header>
+
         <div class="entry-content">
           <p>Database optimization is very crucial for any production grade application to achieve scalability and high performance. MySQL optimization involves different levels, from optimizing SQL queries, configuring system variables, buffer and cache, refining database structure. This article is going to focus on the first part: optimizing SQL queries to reduce response time. </p>
 <p>Optimizing SQL query can be restructuring your query, adding indexes. The <code>(*)sec</code> returned when a query executed is the benchmark on how different optimizations affect the response time. This article will cover optimization of SELECT statments. The optimization of DML statements will be left for later posts.<br />
@@ -209,18 +214,21 @@
 </ul>
 <p>Hope I can spend time on them soon. In the mean time, there are plenty of resources to explore on MySQL optimization. You can check out the <a href="http://dev.mysql.com/doc/refman/5.6/en/optimization.html">Optimization Chapter</a> on MySQL Reference Manual as a start.</p>
         </div>
+
         <footer>
           <div class="post-info">
 <p>Tags: &nbsp;<a href=".././tag/mysql.html">mysql</a>&nbsp;&nbsp;<a href=".././tag/optimization.html">optimization</a>&nbsp;&nbsp;</p>
 
 </div><!-- /.post-info -->
-          
+          <!--
 <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="khuevu">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-
-          <p>There are <a href=".././2012/09/13/mysql-optimization.html#disqus_thread">comments</a>.</p>
+-->
+          <p><a href=".././2012/09/13/mysql-optimization.html#disqus_thread">Comments</a>.</p>
         </footer>
       </article>
     </li>
+
+    
     
   
   </ol>

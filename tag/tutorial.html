@@ -4,7 +4,8 @@
     <title>Water Spinach - tutorial</title>
     <meta charset="utf-8"/>
     <link rel="stylesheet" href=".././theme/css/main.css" type="text/css"/>
-    <link href="/" type="application/atom+xml" rel="alternate" title="Water Spinach Atom Feed" />
+    <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,900,400italic,700italic">
+    <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Water Spinach Atom Feed" />
     
     
     <!--[if IE]>
@@ -36,13 +37,13 @@
         
   </head> 
   <body id="index" class="home">
-    
+    <!--
 <a href="https://github.com/khuevu">
 
 <img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" />
 
 </a>
-
+-->
     <!--Logo, site metadata and navigation menu-->
     <header id="side" class="body">
     <aside id="logo"><div><img src=".././theme/images/logo.jpg" width="210" height="140"/></div>
@@ -71,6 +72,9 @@
 
 <ol id="posts" class="hfeed" start="9">
   
+
+    
+
     <li>
       <article class="entry">
         <header>
@@ -78,8 +82,9 @@
         <abbr class="published" title="2012-10-06T00:00:00">
                 Sat 06 October 2012
         </abbr>
-        <p>In <a href=".././category/Blog.html"><b>Blog</b></a></p>
+        <!--<p>In <a href=".././category/Blog.html"><b>Blog</b></a></p>-->
         </header>
+
         <div class="entry-content">
           <p>In this tutorial, we will set up two instances of MySQL on your localhost, one master and one slave and enable data replication between the master and the slave.</p>
 <p>There are several options when you want to scale horizontally with a MySQL database including database sharding, using MySQL Cluster with NDB storage or a master/slave setup. You can refer to this <a href="http://www.oshyn.com/_blog/General/post/A_Summary_of_Scaling_Options_for_MySQL/">link</a> for a more detailed summary. Master/slave will be suitable for your application if it performs a lot of read operations rather than write. So distributing the read operations accross multiple instance will help reduce the load on one master instance and enables scaling out. </p>
@@ -196,18 +201,21 @@ $<span class="n">scripts</span><span class="o">/</span><span class="n">mysql_ins
 <span class="n">mysql</span><span class="o">&gt;</span> <span class="n">START</span> <span class="n">SLAVE</span><span class="p">;</span>
 </pre></div>
         </div>
+
         <footer>
           <div class="post-info">
 <p>Tags: &nbsp;<a href=".././tag/mysql.html">mysql</a>&nbsp;&nbsp;<a href=".././tag/replication.html">replication</a>&nbsp;&nbsp;<a href=".././tag/scalability.html">scalability</a>&nbsp;&nbsp;<a href=".././tag/tutorial.html">tutorial</a>&nbsp;&nbsp;</p>
 
 </div><!-- /.post-info -->
-          
+          <!--
 <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="khuevu">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-
-          <p>There are <a href=".././2012/10/06/mysql-replication.html#disqus_thread">comments</a>.</p>
+-->
+          <p><a href=".././2012/10/06/mysql-replication.html#disqus_thread">Comments</a>.</p>
         </footer>
       </article>
     </li>
+
+    
     
   
   </ol>

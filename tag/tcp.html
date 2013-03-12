@@ -4,7 +4,8 @@
     <title>Water Spinach - tcp</title>
     <meta charset="utf-8"/>
     <link rel="stylesheet" href=".././theme/css/main.css" type="text/css"/>
-    <link href="/" type="application/atom+xml" rel="alternate" title="Water Spinach Atom Feed" />
+    <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,900,400italic,700italic">
+    <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Water Spinach Atom Feed" />
     
     
     <!--[if IE]>
@@ -36,13 +37,13 @@
         
   </head> 
   <body id="index" class="home">
-    
+    <!--
 <a href="https://github.com/khuevu">
 
 <img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" />
 
 </a>
-
+-->
     <!--Logo, site metadata and navigation menu-->
     <header id="side" class="body">
     <aside id="logo"><div><img src=".././theme/images/logo.jpg" width="210" height="140"/></div>
@@ -71,6 +72,9 @@
 
 <ol id="posts" class="hfeed" start="9">
   
+
+    
+
     <li>
       <article class="entry">
         <header>
@@ -78,8 +82,9 @@
         <abbr class="published" title="2012-09-17T00:00:00">
                 Mon 17 September 2012
         </abbr>
-        <p>In <a href=".././category/Blog.html"><b>Blog</b></a></p>
+        <!--<p>In <a href=".././category/Blog.html"><b>Blog</b></a></p>-->
         </header>
+
         <div class="entry-content">
           <p>Sometimes you find yourself behind a restrictive firewall. It blocks any request with destination port other than 80. You can do little thing like browsing websites. </p>
 <p>The solution, if you want to access an application at other ports, is to direct your traffic to a server outside the firewall listening at port 80. The server then forwards the data to your desired destination. It also returns any response from that destination, i.e, <code>tunneling</code>. </p>
@@ -152,18 +157,21 @@ $<span class="n">python</span> <span class="n">tunnel</span><span class="p">.</s
 <p>Here I use tunneling tcp packages through HTTP protocol. It is an existing protocol, which gives the reusability to the program. But you can implement your own program on top of the tunneling TCP Connection. You just need to define your own application layer protocol on how the two end of the tunnel communicate, i.e, when to start sending data, when the data ends...</p>
 <p>You can access the source code of the program <a href="https://github.com/khuevu/http-tunnel">here</a></p>
         </div>
+
         <footer>
           <div class="post-info">
 <p>Tags: &nbsp;<a href=".././tag/http.html">http</a>&nbsp;&nbsp;<a href=".././tag/tcp.html">tcp</a>&nbsp;&nbsp;<a href=".././tag/tunneling.html">tunneling</a>&nbsp;&nbsp;<a href=".././tag/python.html">python</a>&nbsp;&nbsp;</p>
 
 </div><!-- /.post-info -->
-          
+          <!--
 <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="khuevu">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-
-          <p>There are <a href=".././2012/09/17/http-tunnel.html#disqus_thread">comments</a>.</p>
+-->
+          <p><a href=".././2012/09/17/http-tunnel.html#disqus_thread">Comments</a>.</p>
         </footer>
       </article>
     </li>
+
+    
     
   
   </ol>

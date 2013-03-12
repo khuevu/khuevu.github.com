@@ -4,7 +4,8 @@
     <title>Water Spinach - spring</title>
     <meta charset="utf-8"/>
     <link rel="stylesheet" href=".././theme/css/main.css" type="text/css"/>
-    <link href="/" type="application/atom+xml" rel="alternate" title="Water Spinach Atom Feed" />
+    <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,900,400italic,700italic">
+    <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Water Spinach Atom Feed" />
     
     
     <!--[if IE]>
@@ -36,13 +37,13 @@
         
   </head> 
   <body id="index" class="home">
-    
+    <!--
 <a href="https://github.com/khuevu">
 
 <img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" />
 
 </a>
-
+-->
     <!--Logo, site metadata and navigation menu-->
     <header id="side" class="body">
     <aside id="logo"><div><img src=".././theme/images/logo.jpg" width="210" height="140"/></div>
@@ -71,6 +72,9 @@
 
 <ol id="posts" class="hfeed" start="9">
   
+
+    
+
     <li>
       <article class="entry">
         <header>
@@ -78,8 +82,9 @@
         <abbr class="published" title="2012-10-07T00:00:00">
                 Sun 07 October 2012
         </abbr>
-        <p>In <a href=".././category/Blog.html"><b>Blog</b></a></p>
+        <!--<p>In <a href=".././category/Blog.html"><b>Blog</b></a></p>-->
         </header>
+
         <div class="entry-content">
           <p>In my previous <a href="../2012/10/06/mysql-replication.html">post</a>, we have setup one master and one slave MySQL database. If you write your application to interact with database using jdbc connector, it already has the <a href="http://dev.mysql.com/doc/refman/5.1/en/connector-j-reference-replication-connection.html">support for database replication</a>. Basically, you need to use <code>com.mysql.jdbc.ReplicationDriver</code> and change connection to <code>readOnly</code> when you want it to direct traffics to slave instances. What if your application interfaces with database through Hibernate API? Hibernate doesn't explicitly support the replication. Setting Hibernate or Spring's transactions to <code>readOnly</code> doesn't change the underlying jdbc connection to <code>readOnly</code>. </p>
 <p>The first thing come to mind is to have two separate instances of <code>Datasource</code>, one which connection set to <code>readOnly</code> and one not; and have two Hibernate's <code>SessionFactory</code> contain each. However, this method changes your existing programming model. The second choice is to access the underlying jdbc connection of Hibernate's SessionFactory and switch it to <code>readOnly</code> when it is read operation. </p>
@@ -225,18 +230,21 @@
 <span class="nt">&lt;/aop:config&gt;</span>
 </pre></div>
         </div>
+
         <footer>
           <div class="post-info">
 <p>Tags: &nbsp;<a href=".././tag/java.html">java</a>&nbsp;&nbsp;<a href=".././tag/spring.html">spring</a>&nbsp;&nbsp;<a href=".././tag/hibernate.html">hibernate</a>&nbsp;&nbsp;<a href=".././tag/mysql.html">mysql</a>&nbsp;&nbsp;<a href=".././tag/scalability.html">scalability</a>&nbsp;&nbsp;</p>
 
 </div><!-- /.post-info -->
-          
+          <!--
 <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="khuevu">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-
-          <p>There are <a href=".././2012/10/07/spring-hibernate-mysqlreplication.html#disqus_thread">comments</a>.</p>
+-->
+          <p><a href=".././2012/10/07/spring-hibernate-mysqlreplication.html#disqus_thread">Comments</a>.</p>
         </footer>
       </article>
     </li>
+
+    
     
   
   </ol>

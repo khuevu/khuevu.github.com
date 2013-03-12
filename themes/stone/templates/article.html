@@ -9,7 +9,7 @@
      <abbr class="published" title="{{ article.date.isoformat() }}">
                 {{ article.locale_date }}
      </abbr>
-     <p>In <a href="{{ SITEURL }}/{{ article.category.url }}"><b>{{ article.category }}</b></a>{% if PDF_PROCESSOR %}<a href="{{ SITEURL }}/pdf/{{ article.slug }}.pdf">get the pdf</a>{% endif %}   </p>
+     <!--<p>In <a href="{{ SITEURL }}/{{ article.category.url }}"><b>{{ article.category }}</b></a>{% if PDF_PROCESSOR %}<a href="{{ SITEURL }}/pdf/{{ article.slug }}.pdf">get the pdf</a>{% endif %}   </p>-->
 
   </header>
     <div class="entry-content">
@@ -19,6 +19,7 @@
 
     {% include 'article_infos.html' %}
     {% include 'twitter.html' %}
+    <p></p>
     {% if DISQUS_SITENAME %}
       <div class="comments"> 
           <div id="disqus_thread"></div>
