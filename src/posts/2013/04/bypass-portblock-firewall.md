@@ -1,4 +1,8 @@
-How to bypass port block by firewall with Tor
+Date: 2013-04-24
+Title: How to bypass port block by firewall with Tor
+Tags: firewall, tunnel
+Slug: bypass-portblock-firewall
+Category: Blog
 
 Your network adminstrator often configure the firewall to only allow certain port for outgoing TCP connection like 80 (HTTP), 443 (HTTPS), 22 (SSH)
 
@@ -28,6 +32,6 @@ You can add the proxy information if you uses a proxy here as well.
 
 The last step is to start Tor client by running the script in the installation folder. 
 
-The point of this article is to rely on existing tor network instead of setting your own external server. I think, however, Tor is a project with great cause. So consider contributing to the project by adding your Tor relay server to the network too: https://cloud.torproject.org
+The point of this article is to rely on existing tor network instead of setting your own external server. I think, however, Tor is a project with great cause. So consider contributing to the project by adding your Tor relay server to the network too: [https://cloud.torproject.org](https://cloud.torproject.org)
 
 

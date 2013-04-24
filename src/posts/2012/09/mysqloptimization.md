@@ -85,11 +85,9 @@ With the above index, the optimizer will use `first_last_index` for `SELECT` wit
     first_name = 'abc' AND (last_name = 'x' OR last_name = 'y')
 
 But not for: 
-)
+
     last_name = 'xyz'
     first_name = 'abc' OR last_name = 'xyz'
-
-In other words, MySQL optimizer only use index if the first component of the combined index is in the selection criteria.
 
 What if you have two separate indexes on these two columns? MySQL optimizer will try to [merge the indexes](http://dev.mysql.com/doc/refman/5.6/en/index-merge-optimization.html) or select one which it think will filter out more rows.
 

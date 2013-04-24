@@ -1,5 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Water Spinach</title><link href="/" rel="alternate"></link><link href="/feeds/all-en.atom.xml" rel="self"></link><id>/</id><updated>2013-02-04T00:00:00+08:00</updated><entry><title>Firefox OS on Galaxy Nexus - Review</title><link href="/2013/02/04/firefoxOs-galaxynexus-review.html" rel="alternate"></link><updated>2013-02-04T00:00:00+08:00</updated><author><name>Vu Minh Khue</name></author><id>tag:,2013-02-04:2013/02/04/firefoxOs-galaxynexus-review.html</id><summary type="html">&lt;p&gt;Smartphone landscape has never been this hot, with RIM introduces their new OS platform, &lt;a href="http://sg.blackberry.com/software/smartphones/blackberry-10-os.html"&gt;Blackberry 10 OS&lt;/a&gt;. The Software have been a critical wining factor in the phone war. It appeals to users in two ways: providing the best user experience or creating a strong ecosystem. The later can be acchieved by being attractive to application developers. The two late commer, Ubuntu and Firefox are doing just that. The new &lt;a href="http://www.ubuntu.com/devices/phone"&gt;Ubuntu for Phone&lt;/a&gt; is recently released. It emphasises on the large community already supporting Ubuntu platform. &lt;a href="https://developer.mozilla.org/en/docs/Mozilla/Firefox_OS"&gt;Firefox OS&lt;/a&gt;, which is under heavy development, portraits itself as the platform of Open Web Applications. It enables developers to write platform-independent applications in HTML5, CSS and Javascript. &lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Water Spinach</title><link href="/" rel="alternate"></link><link href="/feeds/all-en.atom.xml" rel="self"></link><id>/</id><updated>2013-04-24T00:00:00+08:00</updated><entry><title>ActionBar Tab with Pager</title><link href="/2013/04/24/actionbar-tab-with-pager.html" rel="alternate"></link><updated>2013-04-24T00:00:00+08:00</updated><author><name>Vu Minh Khue</name></author><id>tag:,2013-04-24:2013/04/24/actionbar-tab-with-pager.html</id><summary type="html">&lt;p&gt;In Android API, the ActionBar provides you with the capability of navigating Fragments in Tab mode, while Pager enables swiping of Fragments. And sometimes you will want to have both of these to enhance the user experience. This is a tutorial on how to combine both types of navigation in one activity.&lt;/p&gt;
+&lt;p&gt;In the implementation, the idea is to bind the event listener of ActionBar's TabListener and ViewPager's OnPageChangeListener into one class. So when there is event triggered in one component (tab or pager), you can invoke the respective action on the other. &lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="kr"&gt;public&lt;/span&gt; &lt;span class="kr"&gt;static&lt;/span&gt; &lt;span class="kr"&gt;class&lt;/span&gt; &lt;span class="nx"&gt;TabPagerAdapter&lt;/span&gt; &lt;span class="kr"&gt;extends&lt;/span&gt; &lt;span class="nx"&gt;FragmentPagerAdapter&lt;/span&gt; &lt;span class="kr"&gt;implements&lt;/span&gt; &lt;span class="nx"&gt;ActionBar&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;TabListener&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;ViewPager&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;OnPageChangeListener&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+
+    &lt;span class="kr"&gt;private&lt;/span&gt; &lt;span class="nx"&gt;SherlockFragmentActivity&lt;/span&gt; &lt;span class="nx"&gt;activity&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="kr"&gt;private&lt;/span&gt; &lt;span class="nx"&gt;ViewPager&lt;/span&gt; &lt;span class="nx"&gt;viewPager&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="kr"&gt;private&lt;/span&gt; &lt;span class="nx"&gt;List&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;Fragment&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nx"&gt;fragments&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="kr"&gt;public&lt;/span&gt; &lt;span class="nx"&gt;TabPagerAdapter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;SherlockFragmentActivity&lt;/span&gt; &lt;span class="nx"&gt;activity&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;ViewPager&lt;/span&gt; &lt;span class="nx"&gt;viewPager&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="kr"&gt;super&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;activity&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getSupportFragmentManager&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+        &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;activity&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;activity&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;viewPager&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;viewPager&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;viewPager&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;setAdapter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;viewPager&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;setOnPageChangeListener&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;fragments&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;ArrayList&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;Fragment&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="kr"&gt;public&lt;/span&gt; &lt;span class="k"&gt;void&lt;/span&gt; &lt;span class="nx"&gt;addTab&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;ActionBar&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Tab&lt;/span&gt; &lt;span class="nx"&gt;tab&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;Class&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;?&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nx"&gt;Fragment&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nx"&gt;fragmentClass&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nx"&gt;throws&lt;/span&gt; &lt;span class="nx"&gt;IllegalAccessException&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;InstantiationException&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;activity&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getSupportActionBar&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;addTab&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;tab&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;setTabListener&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+        &lt;span class="nx"&gt;fragments&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;fragmentClass&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;newInstance&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+        &lt;span class="nx"&gt;notifyDataSetChanged&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="o"&gt;@&lt;/span&gt;&lt;span class="nx"&gt;Override&lt;/span&gt;
+    &lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="nx"&gt;void&lt;/span&gt; &lt;span class="nx"&gt;onTabSelected&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;ActionBar&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Tab&lt;/span&gt; &lt;span class="nx"&gt;tab&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;FragmentTransaction&lt;/span&gt; &lt;span class="nx"&gt;ft&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="nx"&gt;viewPager&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;setCurrentItem&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;tab&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getPosition&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="o"&gt;@&lt;/span&gt;&lt;span class="nx"&gt;Override&lt;/span&gt;
+    &lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="nx"&gt;void&lt;/span&gt; &lt;span class="nx"&gt;onTabReselected&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;ActionBar&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Tab&lt;/span&gt; &lt;span class="nx"&gt;tab&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;FragmentTransaction&lt;/span&gt; &lt;span class="nx"&gt;ft&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="nx"&gt;viewPager&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;setCurrentItem&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;tab&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getPosition&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="o"&gt;@&lt;/span&gt;&lt;span class="nx"&gt;Override&lt;/span&gt;
+    &lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="nx"&gt;void&lt;/span&gt; &lt;span class="nx"&gt;onPageSelected&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;int&lt;/span&gt; &lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;activity&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getSupportActionBar&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getTabAt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;select&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="c1"&gt;// some interface methods like onTabUnSelected is obmitted for brevity&lt;/span&gt;
+    &lt;span class="o"&gt;...&lt;/span&gt;
+
+    &lt;span class="o"&gt;@&lt;/span&gt;&lt;span class="nx"&gt;Override&lt;/span&gt;
+    &lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="nx"&gt;Fragment&lt;/span&gt; &lt;span class="nx"&gt;getItem&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;int&lt;/span&gt; &lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;fragments&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="o"&gt;@&lt;/span&gt;&lt;span class="nx"&gt;Override&lt;/span&gt;
+    &lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="nx"&gt;int&lt;/span&gt; &lt;span class="nx"&gt;getCount&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;activity&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getSupportActionBar&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getTabCount&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;For example, in &lt;code&gt;addTab&lt;/code&gt;, besides adding tab with ActionBar.addTab, you need to call notifyDataSetChanged() of the FragmentPagerAdapter as well. The rest is pretty much self-explained. &lt;/p&gt;
+&lt;p&gt;In the layout file, declare a Layout with ViewPager component inside: &lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;&lt;/span&gt;
+
+&lt;span class="nt"&gt;&amp;lt;LinearLayout&lt;/span&gt; &lt;span class="na"&gt;xmlns:android=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://schemas.android.com/apk/res/android&amp;quot;&lt;/span&gt;
+          &lt;span class="na"&gt;android:orientation=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;vertical&amp;quot;&lt;/span&gt;
+          &lt;span class="na"&gt;android:layout_width=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;match_parent&amp;quot;&lt;/span&gt;
+          &lt;span class="na"&gt;android:layout_height=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;match_parent&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;android.support.v4.view.ViewPager&lt;/span&gt;
+    &lt;span class="na"&gt;android:id=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;@+id/pager&amp;quot;&lt;/span&gt;
+    &lt;span class="na"&gt;android:layout_width=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;match_parent&amp;quot;&lt;/span&gt;
+    &lt;span class="na"&gt;android:layout_height=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;wrap_content&amp;quot;&lt;/span&gt;
+    &lt;span class="na"&gt;android:layout_weight=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;1&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/LinearLayout&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;In your Activity class, create an instance of TabPagerAdapter and add new Tabs with their respective classes:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="p"&gt;@&lt;/span&gt;&lt;span class="n"&gt;Override&lt;/span&gt;
+&lt;span class="n"&gt;public&lt;/span&gt; &lt;span class="n"&gt;void&lt;/span&gt; &lt;span class="n"&gt;onCreate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="n"&gt;savedInstanceState&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;super&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;onCreate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;savedInstanceState&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+    &lt;span class="n"&gt;requestWindowFeature&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;FEATURE_INDETERMINATE_PROGRESS&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+    &lt;span class="n"&gt;setContentView&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;layout&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+    &lt;span class="n"&gt;final&lt;/span&gt; &lt;span class="n"&gt;ActionBar&lt;/span&gt; &lt;span class="n"&gt;ab&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;getSupportActionBar&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ab&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getNavigationMode&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; !&lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ActionBar&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;NAVIGATION_MODE_TABS&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;ab&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setDisplayShowTitleEnabled&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;false&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;ab&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setNavigationMode&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ActionBar&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;NAVIGATION_MODE_TABS&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="n"&gt;ViewPager&lt;/span&gt; &lt;span class="n"&gt;pager&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ViewPager&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;findViewById&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pager&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="n"&gt;TabPagerAdapter&lt;/span&gt; &lt;span class="n"&gt;tabPagerAdapter&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="n"&gt;TabPagerAdapter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;this&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;pager&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+    &lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+
+        &lt;span class="n"&gt;tabPagerAdapter&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;addTab&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ab&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;newTab&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="n"&gt;setText&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&amp;quot;&lt;span class="n"&gt;Browse&lt;/span&gt;&amp;quot;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;CategoryListFragment&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;class&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+        &lt;span class="n"&gt;tabPagerAdapter&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;addTab&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ab&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;newTab&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="n"&gt;setText&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&amp;quot;&lt;span class="n"&gt;Home&lt;/span&gt;&amp;quot;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;HomeFragment&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;class&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+    &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;IllegalAccessException&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="p"&gt;...&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;InstantiationException&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="p"&gt;...&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="android"></category></entry><entry><title>How to bypass port block by firewall with Tor</title><link href="/2013/04/24/bypass-portblock-firewall.html" rel="alternate"></link><updated>2013-04-24T00:00:00+08:00</updated><author><name>Vu Minh Khue</name></author><id>tag:,2013-04-24:2013/04/24/bypass-portblock-firewall.html</id><summary type="html">&lt;p&gt;Your network adminstrator often configure the firewall to only allow certain port for outgoing TCP connection like 80 (HTTP), 443 (HTTPS), 22 (SSH)&lt;/p&gt;
+&lt;p&gt;It is a problem if you are using other protocol to communicate to outside world, for example, IRC, git. &lt;/p&gt;
+&lt;p&gt;One solution is to find an alternative endpoint (use https for git, webchat programs for irc), but they are not always available. &lt;/p&gt;
+&lt;p&gt;The second solution is to have a generic program to wrap your packages in another TCP connection using an allowed port; and have a server of yours outside the firewall, listening on that port, unwrap the connection to get the original packages and send it using the desired protocol. This method is called tunneling, you can use existing program like SSH. I have written a tunnel program using HTTP. &lt;/p&gt;
+&lt;p&gt;But what if you don't have a server outside of the firewall? &lt;/p&gt;
+&lt;p&gt;The solution I want to discuss here is using Tor client and leverage on their network of Tor bridges.&lt;/p&gt;
+&lt;p&gt;First, Download Tor &lt;a href="https://www.torproject.org/download/download-easy.html.en"&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Go to the installation folder. In your &lt;code&gt;./Data/Tor/torrc&lt;/code&gt; config file, update these entry: &lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;ReachableAddresses&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;80&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;443
+&lt;span class="n"&gt;ReachableAddresses&lt;/span&gt; &lt;span class="n"&gt;reject&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;
+&lt;span class="n"&gt;SocksListenAddress&lt;/span&gt; 127&lt;span class="p"&gt;.&lt;/span&gt;0&lt;span class="p"&gt;.&lt;/span&gt;0&lt;span class="p"&gt;.&lt;/span&gt;1
+&lt;span class="n"&gt;SocksPort&lt;/span&gt; 9150
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The ReachableAddresses are addresses your firewall allows you to connect. 
+&lt;code&gt;SocksListenAddress&lt;/code&gt; and &lt;code&gt;SocksPort&lt;/code&gt; are the host and port your Tor client listens on. Data sent here will be route to the Tor network using one of the reachable addresses and then to the desired destination. &lt;/p&gt;
+&lt;p&gt;You can add the proxy information if you uses a proxy here as well. &lt;/p&gt;
+&lt;p&gt;The last step is to start Tor client by running the script in the installation folder. &lt;/p&gt;
+&lt;p&gt;The point of this article is to rely on existing tor network instead of setting your own external server. I think, however, Tor is a project with great cause. So consider contributing to the project by adding your Tor relay server to the network too: &lt;a href="https://cloud.torproject.org"&gt;https://cloud.torproject.org&lt;/a&gt;&lt;/p&gt;</summary><category term="firewall"></category><category term="tunnel"></category></entry><entry><title>Firefox OS on Galaxy Nexus - Review</title><link href="/2013/02/04/firefoxOs-galaxynexus-review.html" rel="alternate"></link><updated>2013-02-04T00:00:00+08:00</updated><author><name>Vu Minh Khue</name></author><id>tag:,2013-02-04:2013/02/04/firefoxOs-galaxynexus-review.html</id><summary type="html">&lt;p&gt;Smartphone landscape has never been this hot, with RIM introduces their new OS platform, &lt;a href="http://sg.blackberry.com/software/smartphones/blackberry-10-os.html"&gt;Blackberry 10 OS&lt;/a&gt;. The Software have been a critical wining factor in the phone war. It appeals to users in two ways: providing the best user experience or creating a strong ecosystem. The later can be acchieved by being attractive to application developers. The two late commer, Ubuntu and Firefox are doing just that. The new &lt;a href="http://www.ubuntu.com/devices/phone"&gt;Ubuntu for Phone&lt;/a&gt; is recently released. It emphasises on the large community already supporting Ubuntu platform. &lt;a href="https://developer.mozilla.org/en/docs/Mozilla/Firefox_OS"&gt;Firefox OS&lt;/a&gt;, which is under heavy development, portraits itself as the platform of Open Web Applications. It enables developers to write platform-independent applications in HTML5, CSS and Javascript. &lt;/p&gt;
 &lt;p&gt;While other smartphone OSes might also support the deployment of web apps, Firefox OS caught my interest by its different proposition: Web apps will be the first-class citizen. Device-level functions like phone call or sms which are usually served by native apps could be built into web apps with the &lt;a href="https://wiki.mozilla.org/WebAPI"&gt;Web Runtime API&lt;/a&gt;. &lt;/p&gt;
 &lt;p&gt;I have tried buiding and flashing Firefox OS into my Galaxy Nexus phone. Here are the screenshots:&lt;/p&gt;
 &lt;p&gt;&lt;img alt="Lock Screen" src="./images/firefoxos1.jpg" /&gt;&lt;/p&gt;
@@ -719,11 +840,12 @@ $&lt;span class="n"&gt;python&lt;/span&gt; &lt;span class="n"&gt;tunnel&lt;/span
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;But not for: 
-)
-    last_name = 'xyz'
-    first_name = 'abc' OR last_name = 'xyz'&lt;/p&gt;
-&lt;p&gt;In other words, MySQL optimizer only use index if the first component of the combined index is in the selection criteria.&lt;/p&gt;
+&lt;p&gt;But not for: &lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;last_name&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;xyz&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;first_name&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;abc&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;OR&lt;/span&gt; &lt;span class="n"&gt;last_name&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;xyz&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;What if you have two separate indexes on these two columns? MySQL optimizer will try to &lt;a href="http://dev.mysql.com/doc/refman/5.6/en/index-merge-optimization.html"&gt;merge the indexes&lt;/a&gt; or select one which it think will filter out more rows.&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;SELECT&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt; &lt;span class="n"&gt;WHERE&lt;/span&gt; &lt;span class="n"&gt;first_name&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;abc&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;OR&lt;/span&gt; &lt;span class="n"&gt;last_name&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;xyz&amp;#39;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;

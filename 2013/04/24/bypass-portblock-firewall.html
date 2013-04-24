@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Water Spinach</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="../../.././theme/css/main.css" type="text/css"/>
+    <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,900,400italic,700italic">
+    <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Water Spinach Atom Feed" />
+    
+    
+    <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <!--[if lte IE 7]>
+        <link rel="stylesheet" type="text/css" media="all" href="../../.././css/ie.css"/>
+        <script src="../../.././js/IE8.js" type="text/javascript"></script><![endif]-->
+
+    <!--[if lt IE 7]>
+         <link rel="stylesheet" type="text/css" media="all" href="../../.././css/ie6.css"/><![endif]-->
+
+        
+<script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-34233563-1']);
+    _gaq.push(['_trackPageview']);
+    _gaq.push(['_gat._anonymizeIp']);
+
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+</script>
+
+        
+  </head> 
+  <body id="index" class="home">
+    <!--
+<a href="https://github.com/khuevu">
+
+<img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" />
+
+</a>
+-->
+    <!--Logo, site metadata and navigation menu-->
+    <header id="side" class="body">
+    <aside id="logo"><div><img src="../../.././theme/images/logo.jpg" width="210" height="140"/></div>
+    <hgroup>
+    <h1 id="title"><a href="../../../.">Water Spinach </a></h1>
+    <h2>Enough to fill the stomach</h2>
+    </hgroup>
+    </aside>  
+    <nav>
+        <ul class="menu">
+            
+            <li class="active"><a href="../../.././category/Blog.html">Blog</a></li>
+            
+            <li><a href="../../.././tags.html">Tags</a></li>
+            <li><a href="../../.././archive.html">Archive</a></li>
+            <li><a href="../../.././about.html">About</a></li>
+        </ul>
+    </nav>
+    <div id="credit">
+    Powered by <a href="http://pelican.notmyidea.org/">Pelican</a>
+    </div>
+    </header>
+    <!-- Content Block -->
+    
+<section id="content" class="body">
+  <article class="entry">
+  <header>
+    <h1 class="entry-title"> 
+      How to bypass port block by firewall with Tor
+    </h1>
+     <abbr class="published" title="2013-04-24T00:00:00">
+                Wed 24 April 2013
+     </abbr>
+     <!--<p>In <a href="../../.././category/Blog.html"><b>Blog</b></a>   </p>-->
+
+  </header>
+    <div class="entry-content">
+      <p>Your network adminstrator often configure the firewall to only allow certain port for outgoing TCP connection like 80 (HTTP), 443 (HTTPS), 22 (SSH)</p>
+<p>It is a problem if you are using other protocol to communicate to outside world, for example, IRC, git. </p>
+<p>One solution is to find an alternative endpoint (use https for git, webchat programs for irc), but they are not always available. </p>
+<p>The second solution is to have a generic program to wrap your packages in another TCP connection using an allowed port; and have a server of yours outside the firewall, listening on that port, unwrap the connection to get the original packages and send it using the desired protocol. This method is called tunneling, you can use existing program like SSH. I have written a tunnel program using HTTP. </p>
+<p>But what if you don't have a server outside of the firewall? </p>
+<p>The solution I want to discuss here is using Tor client and leverage on their network of Tor bridges.</p>
+<p>First, Download Tor <a href="https://www.torproject.org/download/download-easy.html.en">here</a></p>
+<p>Go to the installation folder. In your <code>./Data/Tor/torrc</code> config file, update these entry: </p>
+<div class="codehilite"><pre><span class="n">ReachableAddresses</span> <span class="o">*</span><span class="p">:</span>80<span class="p">,</span><span class="o">*</span><span class="p">:</span>443
+<span class="n">ReachableAddresses</span> <span class="n">reject</span> <span class="o">*</span><span class="p">:</span><span class="o">*</span>
+<span class="n">SocksListenAddress</span> 127<span class="p">.</span>0<span class="p">.</span>0<span class="p">.</span>1
+<span class="n">SocksPort</span> 9150
+</pre></div>
+
+
+<p>The ReachableAddresses are addresses your firewall allows you to connect. 
+<code>SocksListenAddress</code> and <code>SocksPort</code> are the host and port your Tor client listens on. Data sent here will be route to the Tor network using one of the reachable addresses and then to the desired destination. </p>
+<p>You can add the proxy information if you uses a proxy here as well. </p>
+<p>The last step is to start Tor client by running the script in the installation folder. </p>
+<p>The point of this article is to rely on existing tor network instead of setting your own external server. I think, however, Tor is a project with great cause. So consider contributing to the project by adding your Tor relay server to the network too: <a href="https://cloud.torproject.org">https://cloud.torproject.org</a></p>
+    </div>
+    <footer>
+
+    <div class="post-info">
+<p>Tags: &nbsp;<a href="../../.././tag/firewall.html">firewall</a>&nbsp;&nbsp;<a href="../../.././tag/tunnel.html">tunnel</a>&nbsp;&nbsp;</p>
+
+</div><!-- /.post-info -->
+    
+<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="khuevu">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+
+    <p></p>
+    
+      <div class="comments"> 
+          <div id="disqus_thread"></div>
+          <script type="text/javascript">  
+            var disqus_identifier = "2013/04/24/bypass-portblock-firewall.html";
+            (function() {
+              var dsq = document.createElement('script'); 
+              dsq.type = 'text/javascript';
+              dsq.async = true;
+              dsq.src = 'http://waterspinach.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+             })();
+          </script>
+      </div>
+      
+    </footer>
+  </article>
+</section>
+
+    <footer id="footer" class="body">
+      <address id="about">
+      </address>
+    </footer>
+    
+<script type="text/javascript">
+    var disqus_shortname = 'waterspinach';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+
+  </body>
+</html>
