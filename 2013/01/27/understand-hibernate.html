@@ -96,37 +96,23 @@
 <p>A Session is an inexpensive, non-threadsafe object that should be used once and then discarded for. A Session will not obtain a JDBC Connection, or a Datasource, unless it is needed. It will not consume any resources until used. </p>
 </blockquote>
 <p>A Hibernate Session can span multiple physical database transactions. Hibernate <code>Session</code> will acquire a JDBC connection when transaction start. That means all communication with database must occur inside a transaction. When transaction is committed, Hibernate will release the collection. Typically, your data access code will be: </p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15</pre></div></td><td class="code"><div class="codehilite"><pre><span class="n">Session</span> <span class="n">sess</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="na">openSession</span><span class="o">();</span>
-<span class="n">Transaction</span> <span class="n">tx</span><span class="o">;</span>
-<span class="k">try</span> <span class="o">{</span>
-    <span class="n">tx</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">();</span>
-    <span class="c1">//do some work</span>
-    <span class="o">...</span>
-    <span class="n">tx</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
-<span class="o">}</span>
-<span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">tx</span><span class="o">!=</span><span class="kc">null</span><span class="o">)</span> <span class="n">tx</span><span class="o">.</span><span class="na">rollback</span><span class="o">();</span>
-    <span class="k">throw</span> <span class="n">e</span><span class="o">;</span>
-<span class="o">}</span>
-<span class="k">finally</span> <span class="o">{</span>
-    <span class="n">sess</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-<span class="o">}</span>
+<div class="codehilite"><pre><span class="n">Session</span> <span class="n">sess</span> <span class="p">=</span> <span class="n">factory</span><span class="p">.</span><span class="n">openSession</span><span class="p">();</span>
+<span class="n">Transaction</span> <span class="n">tx</span><span class="p">;</span>
+<span class="k">try</span> <span class="p">{</span>
+    <span class="n">tx</span> <span class="p">=</span> <span class="n">sess</span><span class="p">.</span><span class="n">beginTransaction</span><span class="p">();</span>
+    <span class="o">//</span><span class="n">do</span> <span class="n">some</span> <span class="n">work</span>
+    <span class="p">...</span>
+    <span class="n">tx</span><span class="p">.</span><span class="n">commit</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">tx</span>!<span class="p">=</span><span class="n">null</span><span class="p">)</span> <span class="n">tx</span><span class="p">.</span><span class="n">rollback</span><span class="p">();</span>
+    <span class="n">throw</span> <span class="n">e</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">finally</span> <span class="p">{</span>
+    <span class="n">sess</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+<span class="p">}</span>
 </pre></div>
-</td></tr></table>
+
 
 <p>The code above is simplest form to give you an idea of different steps handling a <code>Session</code>. Usually, you should access the <code>Session</code> object through <code>SessionFactory.getCurrentSession</code>, or putting the transaction boiler plate code in a filter or AOP interceptor instead. </p>
 <p>If, outside a transaction, you try to access a data object or its laizly initialized property (we will talk about it later) exception will be thrown by Hibernate. You will need to start DB transactions to write to DB or transactions to read only. That's why you might have several physical transactions over a Session - a business transaction. We will discuss these scenarios nextby considering some of the design pattern for Hibernate web application: </p>
@@ -136,79 +122,54 @@
 <p>The solution to this problem is keep the session open until the view rendered completely but just before the response is returned to client (<code>Open Session In View</code>). Alternatively, you can have two DB transactions for one <code>Session</code>. The first transaction is opened for main logic processing. Don't discard the <code>Session</code> after that. The second transaction is a read only transaction started during rendering phase. You can find a very good article about these solutions <a href="https://community.jboss.org/wiki/OpenSessionInView">here</a>. </p>
 <h3>Extended Session - Session per conversation</h3>
 <p>Your business transaction spans multiple request-reply cycles. In this Extended Session pattern, you reused the <code>Session</code> object between requests and only discard it when the unit of work complete. The <code>Session</code> object is bind to the conversation by storing in the <code>HttpSession</code>. The <code>Session</code> should keep the transaction boundary within a request processing time:</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10</pre></div></td><td class="code"><div class="codehilite"><pre><span class="c1">// Obtain new Session at the begining of unit of work.</span>
-<span class="n">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">sessionFactory</span><span class="o">.</span><span class="na">openSession</span><span class="o">();</span>  
-<span class="n">session</span><span class="o">.</span><span class="na">setFlushMode</span><span class="o">(</span><span class="n">FlushMode</span><span class="o">.</span><span class="na">NEVER</span><span class="o">);</span> <span class="c1">// IMPORTANT</span>
+<div class="codehilite"><pre><span class="c1">// Obtain new Session at the begining of unit of work.</span>
+<span class="n">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">sessionFactory</span><span class="p">.</span><span class="n">openSession</span><span class="p">();</span>  
+<span class="n">session</span><span class="p">.</span><span class="n">setFlushMode</span><span class="p">(</span><span class="n">FlushMode</span><span class="p">.</span><span class="no">NEVER</span><span class="p">);</span> <span class="c1">// IMPORTANT</span>
 
 <span class="c1">//Obtain new JDBC Connection, start DB Transaction</span>
-<span class="n">Transaction</span> <span class="n">tx</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">();</span> 
-<span class="n">Foo</span> <span class="n">foo</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">Foo</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">id</span><span class="o">);</span>
-<span class="o">...</span>
+<span class="n">Transaction</span> <span class="n">tx</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="n">beginTransaction</span><span class="p">();</span> 
+<span class="n">Foo</span> <span class="n">foo</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">Foo</span><span class="p">.</span><span class="k">class</span><span class="p">,</span> <span class="n">id</span><span class="p">);</span>
+<span class="p">...</span>
 <span class="c1">// release JDBC Connection during the unit of work. Waiting for user next request.</span>
-<span class="n">tx</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+<span class="n">tx</span><span class="p">.</span><span class="n">commit</span><span class="p">();</span>
 </pre></div>
-</td></tr></table>
+
 
 <p>The <code>Session</code> should be disconnectied from JDBC connection during user think time by calling <code>tx.commit()</code>. Note that you need to set the <code>FlushMode</code> to <code>NEVER</code>. The <code>tx.commit()</code> will auto flush the session otherwise. We are still in a unit of work (business transaction), thus we don't want to flush the cahnge to database yet. (I believe there is a bug in Hibernate documentation, in which it states that the <code>FlushMode.MANUAL</code> will prevent the flushing when a transaction is committed. But the <a href="http://docs.jboss.org/hibernate/orm/3.2/api/org/hibernate/Transaction.html">java doc</a> says the former')</p>
 <p>The next request within the same unit of work, the <code>Session</code> object will open another database transaction: </p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="codehilite"><pre><span class="n">Transaction</span> <span class="n">tx</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">beginTransaction</span> <span class="c1">// same Session, obtain new JDBC Connection</span>
+<div class="codehilite"><pre><span class="n">Transaction</span> <span class="n">tx</span> <span class="p">=</span> <span class="n">session</span><span class="p">.</span><span class="n">beginTransaction</span> <span class="o">//</span> <span class="n">same</span> <span class="n">Session</span><span class="p">,</span> <span class="n">obtain</span> <span class="n">new</span> <span class="n">JDBC</span> <span class="n">Connection</span>
 
-<span class="c1">//previously loaded foo object. </span>
-<span class="n">foo</span><span class="o">.</span><span class="na">setProperty</span><span class="o">(</span><span class="s">&quot;bar&quot;</span><span class="o">);</span>
+<span class="o">//</span><span class="n">previously</span> <span class="n">loaded</span> <span class="n">foo</span> <span class="n">object</span><span class="p">.</span> 
+<span class="n">foo</span><span class="p">.</span><span class="n">setProperty</span><span class="p">(</span>&quot;<span class="n">bar</span>&quot;<span class="p">);</span>
 
-<span class="n">tx</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+<span class="n">tx</span><span class="p">.</span><span class="n">commit</span><span class="p">();</span>
 </pre></div>
-</td></tr></table>
+
 
 <p>The <code>Session</code> knows the foo object is the one it loaded previously. At the last transaction in the conversation, we flush the change to database and discard the <code>Session</code>: </p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="codehilite"><pre><span class="n">session</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
-<span class="n">tx</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
-<span class="n">session</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+<div class="codehilite"><pre><span class="n">session</span><span class="p">.</span><span class="n">flush</span><span class="p">();</span>
+<span class="n">tx</span><span class="p">.</span><span class="n">commit</span><span class="p">();</span>
+<span class="n">session</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
 </pre></div>
-</td></tr></table>
+
 
 <p>Change made to the foo object will be flushed to database. This approach is efficient in database access. No resource is used until needed. Refer to this <a href="https://community.jboss.org/wiki/OpenSessionInView#What_about_the_extended_Session_pattern_for_long_Conversations">article</a> for more details. </p>
 <p>And you should never have a long transaction spanning the whole conversation. Having a long database transaction not only hogs resource but also leads to stale data due to concurrent access. StaleObjectStateException will be thrown. It prevents your application to scale concurrently. (Do note that within a thread, a single database transaction is going to perform better than many small transactions, <a href="http://docs.jboss.org/hibernate/core/3.3/reference/en/html/transactions.html#transactions-demarcation">even for reading data</a>)</p>
 <p>This pattern, however, is not suitable for a long conversation. With loaded objects kept in memory, you will soon run hit OutOfMemory error if you keep the <code>Session</code> for too long. So for a long conversation, we use an alternative approach. </p>
 <h3>Detached Session - For long conversation</h3>
 <p>To keep memory from overflowing during a long conversation, we use a new session for each user interaction. In this pattern, the staging change will be kept by mean of persistent objects. The managed objects that change is made directly to. You keep these objects between interactions, detach them from old <code>Session</code> when it is closed and re-attach them to the new <code>Session</code>. So the persistent objects are ones that are kept within <code>HttpSession</code> 's context within a unit of work. You can re-attach an object by calling <code>Session</code>'s <code>merge</code> or <code>saveOrUpdate</code>:</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10</pre></div></td><td class="code"><div class="codehilite"><pre><span class="c1">// foo is an instance loaded by a previous Session</span>
-<span class="n">foo</span><span class="o">.</span><span class="na">setProperty</span><span class="o">(</span><span class="s">&quot;bar&quot;</span><span class="o">);</span>
+<div class="codehilite"><pre><span class="c1">// foo is an instance loaded by a previous Session</span>
+<span class="n">foo</span><span class="p">.</span><span class="n">setProperty</span><span class="p">(</span><span class="s">&quot;bar&quot;</span><span class="p">);</span>
 
-<span class="n">session</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="na">openSession</span><span class="o">();</span> <span class="c1">// open new session</span>
-<span class="n">Transaction</span> <span class="n">tx</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">();</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">factory</span><span class="p">.</span><span class="n">openSession</span><span class="p">();</span> <span class="c1">// open new session</span>
+<span class="n">Transaction</span> <span class="n">tx</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="n">beginTransaction</span><span class="p">();</span>
 
-<span class="n">session</span><span class="o">.</span><span class="na">saveOrUpdate</span><span class="o">(</span><span class="n">foo</span><span class="o">);</span> <span class="c1">// Use merge() if &quot;foo&quot; might have been loaded already</span>
+<span class="n">session</span><span class="p">.</span><span class="n">saveOrUpdate</span><span class="p">(</span><span class="n">foo</span><span class="p">);</span> <span class="c1">// Use merge() if &quot;foo&quot; might have been loaded already</span>
 
-<span class="n">t</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
-<span class="n">session</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+<span class="n">t</span><span class="p">.</span><span class="n">commit</span><span class="p">();</span>
+<span class="n">session</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
 </pre></div>
-</td></tr></table>
+
 
 <h2>Hibernate Integration</h2>
 <p>In practice, we don't often need to write our own transaction code. We use Hibernate or Spring's HibernateTransactionManager instead. These transaction managers wrap a transaction around method invokation, which requires database accesses. But in essense, they are all doing the same thing as described above: obtain a session, start the transaction, flush the session if needed, commit the transaction, discard the session if needed; roll back transaction and discard session if exception is thrown. </p>

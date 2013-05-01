@@ -82,19 +82,14 @@
   </header>
     <div class="entry-content">
       <p>A few months ago, I have written a <a href="https://chrome.google.com/webstore/detail/social-snap/bnhlaifngpmodnnkpebagndhomlcnaed">chrome extension</a> for instant sharing of captured content of a webpage to Facebook. So one of the requirement is that the captured image data is uploaded to Facebook. The familiar web flow of uploading a file to serverwould be presenting user with upload file form (html form with enctype="multipart/form-data") and let them select the file: </p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="codehilite"><pre><span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">&quot;https://graph.facebook.com/me/photos?access_token=...&quot;</span> <span class="na">method=</span><span class="s">&quot;post&quot;</span>
+<div class="codehilite"><pre><span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">&quot;https://graph.facebook.com/me/photos?access_token=...&quot;</span> <span class="na">method=</span><span class="s">&quot;post&quot;</span>
 <span class="na">enctype=</span><span class="s">&quot;multipart/form-data&quot;</span><span class="nt">&gt;</span>
 <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;file&quot;</span><span class="nt">&gt;</span>Filename:<span class="nt">&lt;/label&gt;</span>
 <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;file&quot;</span> <span class="na">name=</span><span class="s">&quot;file&quot;</span> <span class="na">id=</span><span class="s">&quot;file&quot;</span><span class="nt">&gt;&lt;br&gt;</span>
 <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="na">name=</span><span class="s">&quot;submit&quot;</span> <span class="na">value=</span><span class="s">&quot;Submit&quot;</span><span class="nt">&gt;</span>
 <span class="nt">&lt;/form&gt;</span>
 </pre></div>
-</td></tr></table>
+
 
 <p>So how do we accomplish it in Javascript? First, we need to know what is actually sent in the body of the HTTP request when a file is uploaded using the above method. Well, the body of request originated from a "multiplart/form-data" form is indeed a multipart message. The message follows the <a href="http://en.wikipedia.org/wiki/MIME">MIME internet standard</a>.<br />
 </p>
@@ -131,39 +126,24 @@
 </ul>
 <p>From this obseravation, we can easily construct the upload file request.<br />
 </p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16</pre></div></td><td class="code"><div class="codehilite"><pre><span class="kd">function</span> <span class="nx">uploadFacebookPhoto</span><span class="p">(</span><span class="nx">imageData</span><span class="p">,</span> <span class="nx">caption</span><span class="p">,</span> <span class="nx">accessToken</span><span class="p">)</span> <span class="p">{</span>
+<div class="codehilite"><pre><span class="k">function</span><span class="w"> </span><span class="nf">uploadFacebookPhoto</span><span class="p">(</span>imageData, caption, accessToken<span class="p">)</span><span class="w"> </span><span class="p">{</span>
 
-    <span class="kd">var</span> <span class="nx">photoUrl</span> <span class="o">=</span> <span class="s1">&#39;https://graph.facebook.com/me/photos?access_token=&#39;</span> <span class="o">+</span> <span class="nx">accessToken</span><span class="p">;</span>
-    <span class="kd">var</span> <span class="nx">xhr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
-    <span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&quot;POST&quot;</span><span class="p">,</span> <span class="nx">photoUrl</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
-    <span class="nx">xhr</span><span class="p">.</span><span class="nx">setRequestHeader</span><span class="p">(</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">,</span> <span class="s2">&quot;multipart/form-data; boundary=-----&quot;</span><span class="p">)</span>
-    <span class="nx">xhr</span><span class="p">.</span><span class="nx">onreadystatechange</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">readyState</span> <span class="o">==</span> <span class="mi">4</span> <span class="o">&amp;&amp;</span> <span class="nx">xhr</span><span class="p">.</span><span class="nx">status</span> <span class="o">==</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;successfully post the message&#39;</span><span class="p">);</span>
-            <span class="nx">controller</span><span class="p">.</span><span class="nx">exit</span><span class="p">();</span>
+    <span class="n">var</span> <span class="n">photoUrl</span> <span class="p">=</span> <span class="s">&#39;https://graph.facebook.com/me/photos?access_token=&#39;</span> <span class="o">+</span> <span class="n">accessToken</span><span class="p">;</span>
+    <span class="n">var</span> <span class="n">xhr</span> <span class="p">=</span> <span class="n">new</span> <span class="n">XMLHttpRequest</span><span class="p">();</span>
+    <span class="n">xhr</span><span class="p">.</span><span class="n">open</span><span class="p">(</span>&quot;<span class="n">POST</span>&quot;<span class="p">,</span> <span class="n">photoUrl</span><span class="p">,</span> <span class="n">true</span><span class="p">);</span>
+    <span class="n">xhr</span><span class="p">.</span><span class="n">setRequestHeader</span><span class="p">(</span>&quot;<span class="n">Content</span><span class="o">-</span><span class="n">Type</span>&quot;<span class="p">,</span> &quot;<span class="n">multipart</span><span class="o">/</span><span class="n">form</span><span class="o">-</span><span class="n">data</span><span class="p">;</span> <span class="n">boundary</span><span class="p">=</span><span class="o">-----</span>&quot;<span class="p">)</span>
+    <span class="n">xhr</span><span class="p">.</span><span class="n">onreadystatechange</span> <span class="p">=</span> <span class="k">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">xhr</span><span class="p">.</span><span class="n">readyState</span> <span class="o">==</span> 4 <span class="o">&amp;&amp;</span> <span class="n">xhr</span><span class="p">.</span><span class="n">status</span> <span class="o">==</span> 200<span class="p">)</span> <span class="p">{</span>
+            <span class="n">console</span><span class="p">.</span><span class="nb">log</span><span class="p">(</span><span class="s">&#39;successfully post the message&#39;</span><span class="p">);</span>
+            <span class="n">controller</span><span class="p">.</span><span class="n">exit</span><span class="p">();</span>
         <span class="p">}</span>
     <span class="p">};</span>
-    <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">prepareMIMEMessage</span><span class="p">(</span><span class="nx">imageData</span><span class="p">,</span> <span class="nx">caption</span><span class="p">,</span> <span class="nx">accessToken</span><span class="p">);</span>
-    <span class="nx">xhr</span><span class="p">.</span><span class="nx">sendAsBinary</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+    <span class="n">var</span> <span class="n">data</span> <span class="p">=</span> <span class="n">prepareMIMEMessage</span><span class="p">(</span><span class="n">imageData</span><span class="p">,</span> <span class="n">caption</span><span class="p">,</span> <span class="n">accessToken</span><span class="p">);</span>
+    <span class="n">xhr</span><span class="p">.</span><span class="n">sendAsBinary</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
 
 <span class="p">}</span>
 </pre></div>
-</td></tr></table>
+
 
 <p>In the above code, the function <code>prepareMIMEMessage</code> does the construction of the message body. </p>
     </div>

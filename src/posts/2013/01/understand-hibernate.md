@@ -28,7 +28,6 @@ From Hibernate [documentation](http://docs.jboss.org/hibernate/core/3.3/referenc
 
 A Hibernate Session can span multiple physical database transactions. Hibernate `Session` will acquire a JDBC connection when transaction start. That means all communication with database must occur inside a transaction. When transaction is committed, Hibernate will release the collection. Typically, your data access code will be: 
 
-    #!java
     Session sess = factory.openSession();
     Transaction tx;
     try {
@@ -61,7 +60,6 @@ The solution to this problem is keep the session open until the view rendered co
 
 Your business transaction spans multiple request-reply cycles. In this Extended Session pattern, you reused the `Session` object between requests and only discard it when the unit of work complete. The `Session` object is bind to the conversation by storing in the `HttpSession`. The `Session` should keep the transaction boundary within a request processing time:
 
-    #!java
     // Obtain new Session at the begining of unit of work.
     Session session = sessionFactory.openSession();  
     session.setFlushMode(FlushMode.NEVER); // IMPORTANT
@@ -78,7 +76,6 @@ The `Session` should be disconnectied from JDBC connection during user think tim
 
 The next request within the same unit of work, the `Session` object will open another database transaction: 
 
-    #!java 
     Transaction tx = session.beginTransaction // same Session, obtain new JDBC Connection
     
     //previously loaded foo object. 
@@ -88,7 +85,6 @@ The next request within the same unit of work, the `Session` object will open an
 
 The `Session` knows the foo object is the one it loaded previously. At the last transaction in the conversation, we flush the change to database and discard the `Session`: 
 
-    #!java
 
     session.flush();
     tx.commit();
@@ -104,7 +100,6 @@ This pattern, however, is not suitable for a long conversation. With loaded obje
 
 To keep memory from overflowing during a long conversation, we use a new session for each user interaction. In this pattern, the staging change will be kept by mean of persistent objects. The managed objects that change is made directly to. You keep these objects between interactions, detach them from old `Session` when it is closed and re-attach them to the new `Session`. So the persistent objects are ones that are kept within `HttpSession` 's context within a unit of work. You can re-attach an object by calling `Session`'s `merge` or `saveOrUpdate`:
 
-    #!java
     // foo is an instance loaded by a previous Session
     foo.setProperty("bar");
     

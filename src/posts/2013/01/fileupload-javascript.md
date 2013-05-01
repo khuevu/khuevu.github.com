@@ -6,7 +6,7 @@ Category: Blog
 
 A few months ago, I have written a [chrome extension](https://chrome.google.com/webstore/detail/social-snap/bnhlaifngpmodnnkpebagndhomlcnaed) for instant sharing of captured content of a webpage to Facebook. So one of the requirement is that the captured image data is uploaded to Facebook. The familiar web flow of uploading a file to serverwould be presenting user with upload file form (html form with enctype="multipart/form-data") and let them select the file: 
 
-    #!html
+    
     <form action="https://graph.facebook.com/me/photos?access_token=..." method="post"
     enctype="multipart/form-data">
     <label for="file">Filename:</label>
@@ -52,7 +52,7 @@ We can observe from the message.
 From this obseravation, we can easily construct the upload file request.  
 
 
-    #!javascript
+    
     function uploadFacebookPhoto(imageData, caption, accessToken) {
 
 	    var photoUrl = 'https://graph.facebook.com/me/photos?access_token=' + accessToken;
