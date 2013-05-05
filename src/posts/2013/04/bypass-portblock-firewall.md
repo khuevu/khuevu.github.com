@@ -1,5 +1,5 @@
 Date: 2013-04-24
-Title: How to bypass port block by firewall with Tor
+Title: Bypass port block by firewall with Tor
 Tags: firewall, tunnel
 Slug: bypass-portblock-firewall
 Category: Blog
@@ -10,7 +10,7 @@ It is a problem if you are using other protocol to communicate to outside world,
 
 One solution is to find an alternative endpoint (use https for git, webchat programs for irc), but they are not always available. 
 
-The second solution is to have a generic program to wrap your packages in another TCP connection using an allowed port; and have a server of yours outside the firewall, listening on that port, unwrap the connection to get the original packages and send it using the desired protocol. This method is called tunneling, you can use existing program like SSH. I have written a tunnel program using HTTP. 
+The second solution is to have a generic program to wrap your packages in another TCP connection using an allowed port; and have a server of yours outside the firewall, listening on that port, unwrap the connection to get the original packages and send it using the desired protocol. This method is called tunneling, you can use existing program like SSH. I have written a [tunnel program](http://khuevu.github.io/2012/09/17/http-tunnel.html) using HTTP connection. 
 
 But what if you don't have a server outside of the firewall? 
 

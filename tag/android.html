@@ -86,7 +86,7 @@
         </header>
 
         <div class="entry-content">
-          <p>In Android API, the ActionBar provides you with the capability of navigating Fragments in Tab mode, while Pager enables swiping of Fragments. And sometimes you will want to have both of these to enhance the user experience. This is a tutorial on how to combine both types of navigation in one activity.</p>
+          <p>There are a number of questions on stackoverflow about this. In Android API, the ActionBar provides you with the capability of navigating Fragments in Tab mode, while Pager enables swiping of Fragments. And sometimes you will want to have both of these to enhance the user experience. This is a tutorial on how to combine both types of navigation in one activity.</p>
 <p>In the implementation, the idea is to bind the event listener of ActionBar's TabListener and ViewPager's OnPageChangeListener into one class. So when there is event triggered in one component (tab or pager), you can invoke the respective action on the other. </p>
 <div class="codehilite"><pre><span class="kr">public</span> <span class="kr">static</span> <span class="kr">class</span> <span class="nx">TabPagerAdapter</span> <span class="kr">extends</span> <span class="nx">FragmentPagerAdapter</span> <span class="kr">implements</span> <span class="nx">ActionBar</span><span class="p">.</span><span class="nx">TabListener</span><span class="p">,</span> <span class="nx">ViewPager</span><span class="p">.</span><span class="nx">OnPageChangeListener</span> <span class="p">{</span>
 

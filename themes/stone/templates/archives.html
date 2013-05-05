@@ -5,7 +5,7 @@
 <h1>Archives for {{ SITENAME }}</h1>
 
 <dl>
-{% for article in dates %}
+{% for article in dates[::-1] %}
     <dt>{{ article.locale_date }}</dt>
     <dd><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></dd>
 {% endfor %}

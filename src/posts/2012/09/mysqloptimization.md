@@ -1,5 +1,5 @@
 Date: 2012-09-13
-Title: MySQL Performance Optimization - Part 1
+Title: Optimize MySQL query by indexing
 Tags: mysql, optimization
 Slug: mysql-optimization
 Category: Blog
