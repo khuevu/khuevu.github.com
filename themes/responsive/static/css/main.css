@@ -1,0 +1,82 @@
+@import "pygment.css";
+
+body {
+	font-family: 'Droid Serif', serif;
+}
+
+h1, h2, h3, h4, h5, h6, .side-nav, .top-bar-section ul li > a, ul.off-canvas-list li {
+	font-family: 'Droid Sans', sans-serif;
+}
+
+h1, h2, h3 {
+	font-weight: bold;
+}
+
+pre, code {
+	font-family: 'Droid Sans Mono', monospace;
+    font-size: 12px;
+}
+
+code {
+	font-size: 0.7em ;
+}
+
+/* Right hand-side panel setting */
+.panel:first-of-type {
+    margin-top: 1.25rem;
+}
+
+/* Tag Cloud Setting */
+
+ul.tagcloud {
+    list-style: none;
+    padding: 0.875rem 0;
+    margin-left: 0;
+
+}
+
+ul.tagcloud li {
+    display: inline-block;
+}
+
+li.tag-2 {
+    font-size: 60%;
+}
+
+li.tag-1 {
+    font-size: 80%;
+}
+
+li.tag-0 {
+    font-size: 100%;
+}
+
+/* Code highlight */
+
+table.highlighttable {
+    table-layout: fixed;
+    width:100%;
+    background-color: #F0F0F0;
+}
+
+.linenos {
+    width: 2.00rem;
+    text-align: right;
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+    border-right: 1px dotted #222222;
+    font-size: 11px;
+}
+
+.highlight{
+    overflow-x: scroll;
+}
+
+.linenodiv {
+    margin: 0.55rem 0.5rem 0 0;
+    padding: 0;
+}
+
+/* Icons */
+.tag-icon { font-size: 20px; color: #929596 }
