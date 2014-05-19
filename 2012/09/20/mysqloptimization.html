@@ -1,0 +1,365 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />    
+    <meta name="author" content="Vu Minh Khue"/>
+    
+    <title>Water Spinach</title>
+
+    <link rel="stylesheet" href="/theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css"/>
+    <link rel="stylesheet" href="/theme/css/foundation-icons.css"/>
+    
+    <!-- Feeds -->
+
+    <script src="/theme/js/vendor/modernizr.js"></script>
+
+    <!-- Font Google Droid -->
+    <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Sans+Mono|Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+    <!-- Google Analytics -->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-34233563-1']);
+  _gaq.push(['_trackPageview']);
+  _gaq.push(['_gat._anonymizeIp']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+  </head>
+  <body>
+    
+     
+  <div class="off-canvas-wrap">
+    <div class="inner-wrap">
+      <!-- Mobile Navigation -->
+      <nav class="tab-bar show-for-small-only">
+        <section class="left-small show-for-small-only">
+          <a class="left-off-canvas-toggle menu-icon"><span></span></a>
+        </section>
+
+        <section class="middle tab-bar-section">
+          <h1 class="title">Water Spinach</h1>
+        </section>
+
+        <section class="right-small">
+          <a class="right-off-canvas-toggle menu-icon"><span></span></a>
+        </section>
+      </nav>
+
+      <aside class="left-off-canvas-menu">
+        <ul class="off-canvas-list">
+          <li  class="active" ><a href="../../../category/Programming.html">Programming</a></li>
+          <li ><a href="../../../category/Random.html">Random</a></li>
+          <li><a href="../../../archive.html">Archive</a>  </li>
+          <li><a href="#">About Me</a></li>
+        </ul>
+
+      </aside>
+
+      <aside class="right-off-canvas-menu">
+        <ul class="off-canvas-list">
+          <li><label>Tags</label></li>
+          <li><a href="../../../tag/tunnel.html">tunnel</a></li>
+          <li><a href="../../../tag/spring.html">spring</a></li>
+          <li><a href="../../../tag/tutorial.html">tutorial</a></li>
+          <li><a href="../../../tag/firewall.html">firewall</a></li>
+          <li><a href="../../../tag/mysql.html">mysql</a></li>
+          <li><a href="../../../tag/hibernate.html">hibernate</a></li>
+          <li><a href="../../../tag/tcp.html">tcp</a></li>
+          <li><a href="../../../tag/http.html">http</a></li>
+          <li><a href="../../../tag/tunneling.html">tunneling</a></li>
+          <li><a href="../../../tag/javascript.html">javascript</a></li>
+          <li><a href="../../../tag/firefox.html">firefox</a></li>
+          <li><a href="../../../tag/python.html">python</a></li>
+          <li><a href="../../../tag/scalability.html">scalability</a></li>
+          <li><a href="../../../tag/encoding.html">encoding</a></li>
+          <li><a href="../../../tag/pygame.html">pygame</a></li>
+          <li><a href="../../../tag/java.html">java</a></li>
+          <li><a href="../../../tag/replication.html">replication</a></li>
+          <li><a href="../../../tag/optimization.html">optimization</a></li>
+          <li><a href="../../../tag/nexus.html">nexus</a></li>
+          <li><a href="../../../tag/facebook graph.html">facebook graph</a></li>
+          <li><a href="../../../tag/android.html">android</a></li>
+        </ul>
+      </aside>
+
+      <!-- Medium or Wide Screen Navigation -->
+      <nav class="top-bar hide-for-small-only" data-topbar>
+        <ul class="title-area">
+          <li class="name">
+            <h1><a href="../../..">Water Spinach</a></h1>
+          </li>
+        </ul>
+
+        <section class="top-bar-section">
+          <ul class="left">
+            <li  class="active" ><a href="../../../category/Programming.html">Programming</a></li>
+            <li ><a href="../../../category/Random.html">Random</a></li>
+            <li><a href="../../../archive.html">Archive</a>  </li>
+            <li><a href="#">About Me</a></li>
+          </ul>
+        </section>
+      </nav>
+
+      <section class="main-section">
+        <div class="row">
+          <!-- Main Content -->
+          <div class="small-12 medium-9 columns" role="content">
+<article>
+  <h2>Optimize MySQL query by&nbsp;indexing</h2>
+  <p>Database optimization is very crucial for any production grade application to achieve scalability and high performance. MySQL optimization involves different levels, from optimizing <span class="caps">SQL</span> queries, configuring system variables, buffer and cache, refining database structure. This article is going to focus on the first part: optimizing <span class="caps">SQL</span> queries to reduce response&nbsp;time. </p>
+<p>Optimizing <span class="caps">SQL</span> query can be restructuring your query, adding indexes. The <code>(*)sec</code> returned when a query executed is the benchmark on how different optimizations affect the response time. This article will cover optimization of <span class="caps">SELECT</span> statments. The optimization of <span class="caps">DML</span> statements will be left for later&nbsp;posts.  </p>
+<h2>The <span class="caps">EXPLAIN</span>&nbsp;syntax</h2>
+<p><code>EXPLAIN</code> command is a very important tool to understand how query is executed in MySQL. When you type <code>EXPLAIN SELECT...</code>, MySQL doesn&#8217;t actually perform the query. It just analyzes and tell you how the query will be executed. Some of the output&nbsp;information:  </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">select_type</span> <span class="o">|</span> <span class="k">table</span> <span class="o">|</span> <span class="n">type</span> <span class="o">|</span> <span class="n">possible_keys</span> <span class="o">|</span> <span class="k">key</span> <span class="o">|</span> <span class="n">key_len</span> <span class="o">|</span> <span class="n">rows</span> <span class="o">|</span> <span class="n">extra</span>
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>select_type: type of select&nbsp;statement.</li>
+<li>table: table&nbsp;name </li>
+<li>type: Join Types, explains how tables are&nbsp;joined</li>
+<li>possible_keys: possible indexes to&nbsp;choose</li>
+<li>key: actually index&nbsp;chosen</li>
+<li>rows: the estimated number of row need to be&nbsp;examined</li>
+<li>extra: additional&nbsp;information</li>
+</ul>
+<p>Based on these information, we can start optimize our query. When a <code>SELECT</code> is executed, there are two ways that MySQL will retrieve the records. It can either scan the table row by row or do an index look up to find the records explicitly. Most of the times, the later case is more desirable and can improve performance significantly. Or that is to say, there should be an used index, i.e, key value in result of explain&nbsp;command</p>
+<h3>Simple <span class="caps">SELECT</span>&nbsp;example:</h3>
+<p>Let&#8217;s consider a <code>USER</code> table: </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">|</span><span class="n">id</span> <span class="o">|</span> <span class="n">first_name</span> <span class="o">|</span> <span class="n">last_name</span>  <span class="o">|</span>
+<span class="o">|---|------------|---------</span><span class="c1">-- |</span>
+<span class="o">|</span><span class="kt">INT</span><span class="o">|</span> <span class="kt">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span><span class="o">|</span> <span class="kt">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span><span class="o">|</span>
+</pre></div>
+</td></tr></table>
+
+<p>Do a <code>SELECT</code> statement based on primary key <code>id</code>:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">EXPLAIN</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">user</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</pre></div>
+</td></tr></table>
+
+<p>Output:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">|</span> <span class="n">id</span> <span class="o">|</span> <span class="n">select_type</span> <span class="o">|</span> <span class="k">table</span> <span class="o">|</span> <span class="n">type</span>  <span class="o">|</span> <span class="n">possible_keys</span> <span class="o">|</span> <span class="k">key</span>     <span class="o">|</span> <span class="n">key_len</span> <span class="o">|</span> <span class="n">ref</span>   <span class="o">|</span> <span class="n">rows</span> <span class="o">|</span> <span class="n">Extra</span> <span class="o">|</span>
+<span class="o">|----|-------------|-------|-------|---------------|---------|---------|-------|------|-------|</span>
+<span class="o">|</span>  <span class="mi">1</span> <span class="o">|</span> <span class="n">SIMPLE</span>      <span class="o">|</span> <span class="n">user</span>  <span class="o">|</span> <span class="n">const</span> <span class="o">|</span> <span class="k">PRIMARY</span>       <span class="o">|</span> <span class="k">PRIMARY</span> <span class="o">|</span> <span class="mi">4</span>       <span class="o">|</span> <span class="n">const</span> <span class="o">|</span>    <span class="mi">1</span> <span class="o">|</span>       <span class="o">|</span>
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>select_type: <code>SIMPLE</code>, a single select statement, not a join&nbsp;statment. </li>
+<li>type: <code>const</code>, at most one matching row, very&nbsp;fast</li>
+<li>key: <code>PRIMARY</code>, primary key is used for look up&nbsp;operation</li>
+</ul>
+<p>Let&#8217;s do another <code>SELECT</code>:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">EXPLAIN</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">user</span> <span class="k">WHERE</span> <span class="n">first_name</span> <span class="o">=</span> <span class="s1">&#39;khue&#39;</span><span class="p">;</span>
+</pre></div>
+</td></tr></table>
+
+<p>We will see the&nbsp;result:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">|</span> <span class="n">id</span> <span class="o">|</span> <span class="n">select_type</span> <span class="o">|</span> <span class="k">table</span> <span class="o">|</span> <span class="n">type</span>  <span class="o">|</span> <span class="n">possible_keys</span> <span class="o">|</span> <span class="k">key</span>     <span class="o">|</span> <span class="n">key_len</span> <span class="o">|</span> <span class="n">ref</span>   <span class="o">|</span> <span class="n">rows</span> <span class="o">|</span> <span class="n">Extra</span>       <span class="o">|</span>
+<span class="o">|----|-------------|-------|-------|---------------|---------|---------|-------|------|-------------|</span>
+<span class="o">|</span>  <span class="mi">1</span> <span class="o">|</span> <span class="n">SIMPLE</span>      <span class="o">|</span> <span class="n">user</span>  <span class="o">|</span> <span class="k">ALL</span>   <span class="o">|</span> <span class="no">NULL</span>          <span class="o">|</span> <span class="no">NULL</span>    <span class="o">|</span> <span class="no">NULL</span>    <span class="o">|</span> <span class="no">NULL</span>  <span class="o">|</span>   <span class="mi">18</span> <span class="o">|</span> <span class="k">Using</span> <span class="k">where</span> <span class="o">|</span>
+</pre></div>
+</td></tr></table>
+
+<p>No key is used to look up the result. MySQL optimizer performs a full table scan (row by row) to retrieve the record. To improve the performance, simply add the index to first_name&nbsp;column: </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">user</span> <span class="k">ADD</span> <span class="k">INDEX</span> <span class="nf">first_name_index</span> <span class="p">(</span><span class="n">first_name</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<p>When you have an index on <code>first_name</code>, optimizer will still be able to use this index when you only select based on part of the key&nbsp;only: </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">user</span> <span class="k">WHERE</span> <span class="n">first_name</span> <span class="o">=</span> <span class="s1">&#39;kh%&#39;</span><span class="p">;</span>
+
+<span class="c1">#!mysql</span>
+<span class="o">|</span> <span class="n">id</span> <span class="o">|</span> <span class="n">select_type</span> <span class="o">|</span> <span class="k">table</span> <span class="o">|</span> <span class="n">type</span>  <span class="o">|</span> <span class="n">possible_keys</span>   <span class="o">|</span> <span class="k">key</span>             <span class="o">|</span> <span class="n">key_len</span> <span class="o">|</span> <span class="n">ref</span>   <span class="o">|</span> <span class="n">rows</span> <span class="o">|</span> <span class="n">Extra</span>       <span class="o">|</span>
+<span class="o">|----|-------------|-------|-------|-----------------|-----------------|---------|-------|------|-------------|</span>
+<span class="o">|</span>  <span class="mi">1</span> <span class="o">|</span> <span class="n">SIMPLE</span>      <span class="o">|</span> <span class="n">user</span>  <span class="o">|</span> <span class="k">ALL</span>   <span class="o">|</span> <span class="n">first_name_index</span><span class="o">|</span> <span class="n">first_name_index</span><span class="o">|</span>       <span class="mi">30</span><span class="o">|</span> <span class="n">const</span> <span class="o">|</span>   <span class="mi">1</span>  <span class="o">|</span> <span class="k">Using</span> <span class="k">where</span> <span class="o">|</span>
+</pre></div>
+</td></tr></table>
+
+<h3><span class="caps">SELECT</span> based on multiple&nbsp;columns:</h3>
+<p>How about searching for record based on two&nbsp;column: </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">user</span> <span class="k">WHERE</span> <span class="n">first_name</span> <span class="o">=</span> <span class="s1">&#39;khue&#39;</span> <span class="k">AND</span> <span class="n">last_name</span> <span class="o">=</span> <span class="s1">&#39;vu&#39;</span><span class="p">;</span>
+</pre></div>
+</td></tr></table>
+
+<p>You can add a multiple column&nbsp;index: </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">user</span> <span class="k">ADD</span> <span class="k">INDEX</span> <span class="nf">first_last_index</span> <span class="p">(</span><span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<p>With the above index, the optimizer will use <code>first_last_index</code> for <code>SELECT</code> with <code>WHERE</code> clause&nbsp;like: </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">first_name</span> <span class="o">=</span> <span class="s1">&#39;abc&#39;</span> <span class="k">AND</span> <span class="n">last_name</span> <span class="o">=</span> <span class="s1">&#39;xyz&#39;</span>
+<span class="n">first_name</span> <span class="o">=</span> <span class="s1">&#39;abc&#39;</span> <span class="k">AND</span> <span class="p">(</span><span class="n">last_name</span> <span class="o">=</span> <span class="s1">&#39;x&#39;</span> <span class="k">OR</span> <span class="n">last_name</span> <span class="o">=</span> <span class="s1">&#39;y&#39;</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+<p>But not&nbsp;for: </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">last_name</span> <span class="o">=</span> <span class="s1">&#39;xyz&#39;</span>
+<span class="n">first_name</span> <span class="o">=</span> <span class="s1">&#39;abc&#39;</span> <span class="k">OR</span> <span class="n">last_name</span> <span class="o">=</span> <span class="s1">&#39;xyz&#39;</span>
+</pre></div>
+</td></tr></table>
+
+<p>What if you have two separate indexes on these two columns? MySQL optimizer will try to <a href="http://dev.mysql.com/doc/refman/5.6/en/index-merge-optimization.html">merge the indexes</a> or select one which it think will filter out more&nbsp;rows.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">user</span> <span class="k">WHERE</span> <span class="n">first_name</span> <span class="o">=</span> <span class="s1">&#39;abc&#39;</span> <span class="k">OR</span> <span class="n">last_name</span> <span class="o">=</span> <span class="s1">&#39;xyz&#39;</span>
+</pre></div>
+</td></tr></table>
+
+<p>With the above statement, optimizer won&#8217;t use any index, either it is a combined index on two columns <code>first_name</code> and <code>last_name</code> or one index on each column. There is a trick to&nbsp;that: </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">user</span> <span class="k">WHERE</span> <span class="n">first_name</span> <span class="o">=</span> <span class="s1">&#39;abc&#39;</span> <span class="k">UNION</span> <span class="k">ALL</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">user</span> <span class="k">WHERE</span> <span class="n">last_name</span> <span class="o">=</span> <span class="s1">&#39;xyz&#39;</span>
+</pre></div>
+</td></tr></table>
+
+<p>Use <code>EXPLAIN</code> we will&nbsp;have: </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">|</span> <span class="n">id</span> <span class="o">|</span> <span class="n">select_type</span>  <span class="o">|</span> <span class="k">table</span>      <span class="o">|</span> <span class="n">type</span> <span class="o">|</span> <span class="n">possible_keys</span>  <span class="o">|</span> <span class="k">key</span>            <span class="o">|</span>
+<span class="o">|----|--------------|------------|------|----------------|----------------|</span>
+<span class="o">|</span>  <span class="mi">1</span> <span class="o">|</span> <span class="k">PRIMARY</span>      <span class="o">|</span> <span class="n">user</span>       <span class="o">|</span> <span class="n">ref</span>  <span class="o">|</span> <span class="n">first_name</span>     <span class="o">|</span> <span class="n">first_name</span>     <span class="o">|</span>
+<span class="o">|</span>  <span class="mi">2</span> <span class="o">|</span> <span class="k">UNION</span>        <span class="o">|</span> <span class="n">user</span>       <span class="o">|</span> <span class="n">ref</span>  <span class="o">|</span> <span class="n">last_name</span>      <span class="o">|</span> <span class="n">last_name</span>      <span class="o">|</span>
+<span class="o">|</span> <span class="no">NULL</span> <span class="o">|</span> <span class="k">UNION</span> <span class="n">RESULT</span> <span class="o">|</span> <span class="o">&lt;</span><span class="n">union1</span><span class="p">,</span><span class="mi">2</span><span class="o">&gt;</span> <span class="o">|</span> <span class="k">ALL</span>  <span class="o">|</span> <span class="no">NULL</span>           <span class="o">|</span> <span class="no">NULL</span>         <span class="o">|</span>
+</pre></div>
+</td></tr></table>
+
+<p>The optimizer will execute two <span class="caps">SELECT</span> statement, one <span class="caps">PRIMARY</span> and one <span class="caps">UNION</span>, and then <span class="caps">UNION</span> the result set. On each <span class="caps">SELECT</span> statement, it uses the respective index to retrieve rows. As a result, we achieve better performance than the previous statement, in which MySQL do a full table&nbsp;scan. </p>
+<h2>Is index always&nbsp;necessary?</h2>
+<p>At the begining of this article, I have mentioned that most of the time, key look up is better than full table scan. There is, however, case when full table scan is better. When you have a small table(less than 10 entries), performing a full table scan is faster than key look up. Or when the result set constitutes a large part of the table (more than 30%), full table scan to fetch result rows is faster than key look up and fetch rows&nbsp;later.  </p>
+<p>Fortunately, MySQL optimizer internally takes on the job of calculating the expenses by different approaches and choose the right one for you. It decides whether accessing by index will be more expensive than table scan or vice versa; which index to use among the&nbsp;available.  </p>
+<p>When you think MySQL optimizer is not doing the right thing, you should run <a href="http://dev.mysql.com/doc/refman/5.6/en/analyze-table.html"><span class="caps">ANALYZE</span></a> on the table your query applies to. <code>ANALYZE</code> gives optimizer up-to-date statistical analysis of tables (size, indexes, etc&#8230;) thus, it has a better idea on how much resources is needed for each approach. If the optimizer still fails you after running <code>ANALYZE</code>, try <a href="http://dev.mysql.com/doc/refman/5.6/en/index-hints.html">making an index hint</a> to it. You can suggest, force it to use or ignore an&nbsp;index.  </p>
+<h2>What&nbsp;next?</h2>
+<p>So far we have shortly discussed on how to optimize MySQL query - <span class="caps">SELECT</span> statement - through the use of <code>EXPLAIN</code>. Other topics I want to extend around this theme&nbsp;are: </p>
+<ul>
+<li>Optimizing <span class="caps">DML</span>&nbsp;statement. </li>
+<li>Configuring system variables and memory&nbsp;usage.</li>
+</ul>
+<p>Hope I can spend time on them soon. In the mean time, there are plenty of resources to explore on MySQL optimization. You can check out the <a href="http://dev.mysql.com/doc/refman/5.6/en/optimization.html">Optimization Chapter</a> on MySQL Reference Manual as a&nbsp;start.</p>
+  <hr/>
+  <h6>Written by <a href="../../../author/vu-minh-khue.html">Vu Minh Khue</a> in <a href="../../../category/Programming.html">Programming</a> on Thu 20 September 2012. Tags: <a href="../../../tag/mysql.html">mysql</a>, <a href="../../../tag/optimization.html">optimization</a>, </h6>
+</article>
+
+<hr/>
+<div class="row">
+  <div class="small-12 columns">
+    <h3>Comments</h3>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname = 'waterspinach';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+  </div>
+</div>
+          </div>
+
+          <!-- Side Panels for Medium or Wide Screen -->
+          <aside class="hide-for-small-only medium-3 columns">
+            <div class="panel">
+            <div>
+              <!-- Pelican's tag cloud -->
+              <label>Tags</label>
+              <ul class="tagcloud">
+                <li class="tag-4"><a href="../../../tag/tunnel.html">tunnel</a></li>
+                <li class="tag-4"><a href="../../../tag/spring.html">spring</a></li>
+                <li class="tag-4"><a href="../../../tag/tutorial.html">tutorial</a></li>
+                <li class="tag-4"><a href="../../../tag/firewall.html">firewall</a></li>
+                <li class="tag-1"><a href="../../../tag/mysql.html">mysql</a></li>
+                <li class="tag-2"><a href="../../../tag/hibernate.html">hibernate</a></li>
+                <li class="tag-4"><a href="../../../tag/tcp.html">tcp</a></li>
+                <li class="tag-4"><a href="../../../tag/http.html">http</a></li>
+                <li class="tag-4"><a href="../../../tag/tunneling.html">tunneling</a></li>
+                <li class="tag-4"><a href="../../../tag/javascript.html">javascript</a></li>
+                <li class="tag-4"><a href="../../../tag/firefox.html">firefox</a></li>
+                <li class="tag-1"><a href="../../../tag/python.html">python</a></li>
+                <li class="tag-2"><a href="../../../tag/scalability.html">scalability</a></li>
+                <li class="tag-4"><a href="../../../tag/encoding.html">encoding</a></li>
+                <li class="tag-4"><a href="../../../tag/pygame.html">pygame</a></li>
+                <li class="tag-2"><a href="../../../tag/java.html">java</a></li>
+                <li class="tag-4"><a href="../../../tag/replication.html">replication</a></li>
+                <li class="tag-4"><a href="../../../tag/optimization.html">optimization</a></li>
+                <li class="tag-4"><a href="../../../tag/nexus.html">nexus</a></li>
+                <li class="tag-4"><a href="../../../tag/facebook graph.html">facebook graph</a></li>
+                <li class="tag-2"><a href="../../../tag/android.html">android</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <!-- Pelican's tag cloud -->
+              <label>Archives</label>
+              <ul class="side-nav">
+                  <li>
+                    <a href="/posts/2012">2012 (7)</a>
+                  </li>
+                  <li>
+                    <a href="/posts/2013">2013 (5)</a>
+                  </li>
+              </ul>
+            </div>
+
+            <div>
+              <label>Links</label>              
+              <ul class="side-nav">
+
+              </ul>
+            </div>
+          </div>
+          </aside>
+        </div>
+        
+
+      </section>
+
+      <footer class="row">
+        <div class="small-12 medium-9 columns">
+          <hr/>
+          <p class="text-center">
+            Powered by <a href="http://getpelican.com">Pelican</a> and
+            <a href="http://foundation.zurb.com/">Zurb Foundation</a>.
+          </p>
+        </div>
+      </footer>
+
+      <a class="exit-off-canvas"></a>
+    </div>
+  </div>
+ 
+ 
+  <!-- Main Page Content and Sidebar -->
+ 
+ 
+
+  <!-- Just before closing body tag -->
+  <script src="/theme/js/vendor/jquery.js"></script> 
+  <script src="/theme/js/vendor/fastclick.js"></script>
+  <script src="/theme/js/foundation/foundation.min.js"></script>
+  <script> $(document).foundation(); </script>  
+  </body>
+</html>
