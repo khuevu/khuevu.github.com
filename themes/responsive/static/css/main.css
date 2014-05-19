@@ -4,7 +4,7 @@ body {
 	font-family: 'Droid Serif', serif;
 }
 
-h1, h2, h3, h4, h5, h6, .side-nav, .top-bar-section ul li > a, ul.off-canvas-list li {
+h1, h2, h3, h4, h5, h6, h7, .side-nav, .top-bar-section ul li > a, ul.off-canvas-list li {
 	font-family: 'Droid Sans', sans-serif;
 }
 
@@ -26,6 +26,11 @@ code {
     margin-top: 1.25rem;
 }
 
+/* Article setting */
+article:first-of-type {
+    margin-top: 1.25rem;
+}
+
 /* Tag Cloud Setting */
 
 ul.tagcloud {
@@ -40,15 +45,15 @@ ul.tagcloud li {
 }
 
 li.tag-2 {
-    font-size: 60%;
+    font-size: 50%;
 }
 
 li.tag-1 {
-    font-size: 80%;
+    font-size: 70%;
 }
 
 li.tag-0 {
-    font-size: 100%;
+    font-size: 90%;
 }
 
 /* Code highlight */
@@ -79,4 +84,13 @@ table.highlighttable {
 }
 
 /* Icons */
-.tag-icon { font-size: 20px; color: #929596 }
+.tag-icon { font-size: 18px; color: #929596 }
+
+
+.metadata { 
+    font-size: 14px; 
+    color: grey;
+    margin-bottom: 25px; 
+}
+
+

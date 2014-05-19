@@ -79,4 +79,5 @@ TYPOGRIFY = True
 # for Development
 RELATIVE_URLS = True
 
-
+PLUGIN_PATH='/Users/khuevu/Projects/pelican-plugins'
+PLUGINS = ['representative_image']
