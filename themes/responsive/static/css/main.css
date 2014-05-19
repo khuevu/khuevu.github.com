@@ -22,9 +22,21 @@ code {
 }
 
 /* Right hand-side panel setting */
-.panel:first-of-type {
+.panel {
     margin-top: 1.25rem;
+    border-radius: 5px;
 }
+
+.panel label {
+    color: #757474;
+    font-weight: bold;
+    font-color: #757474;
+    font-size: 15px;
+    letter-spacing: 0.1em;
+    border-bottom: 1px solid #E0E0E0;
+    padding-bottom: 0.2em;
+}
+
 
 /* Article setting */
 article:first-of-type {
@@ -42,6 +54,10 @@ ul.tagcloud {
 
 ul.tagcloud li {
     display: inline-block;
+}
+
+li.tag-3 {
+    font-size: 30%;
 }
 
 li.tag-2 {

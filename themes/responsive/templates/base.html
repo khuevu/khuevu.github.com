@@ -53,7 +53,6 @@
           {% for cat, articles in categories %}
           <li {% if cat == category %} class="active" {% endif %}><a href="{{ SITEURL }}/{{ cat.url }}">{{ cat.name }}</a></li>
           {% endfor %}
-          <li><a href="#">Random</a>  </li>
           <li><a href="{{ SITEURL }}/{{ ARCHIVES_SAVE_AS }}">Archive</a>  </li>
           <li><a href="#">About Me</a></li>
         </ul>
@@ -82,7 +81,6 @@
             {% for cat, articles in categories %}
             <li {% if cat == category %} class="active" {% endif %}><a href="{{ SITEURL }}/{{ cat.url }}">{{ cat.name }}</a></li>
             {% endfor %}
-            <li><a href="#">Random</a>  </li>
             <li><a href="{{ SITEURL }}/{{ ARCHIVES_SAVE_AS }}">Archive</a>  </li>
             <li><a href="#">About Me</a></li>
           </ul>
@@ -98,8 +96,8 @@
 
           <!-- Side Panels for Medium or Wide Screen -->
           <aside class="hide-for-small-only medium-3 columns">
-
-            <div class="panel first-of-type">
+            <div class="panel">
+            <div>
               <!-- Pelican's tag cloud -->
               <label>Tags</label>
               <ul class="tagcloud">
@@ -109,24 +107,25 @@
               </ul>
             </div>
 
-            <div class="panel">
+            <div>
               <!-- Pelican's tag cloud -->
               <label>Archives</label>
               <ul class="side-nav">
                 {% for year, year_articles in articles|groupby('date.year') %}
                   <li>
-                    <a href="/posts/{{ year }}">- {{ year }} ({{ year_articles|count }})</a>
+                    <a href="/posts/{{ year }}">{{ year }} ({{ year_articles|count }})</a>
                   </li>
                 {% endfor %}
               </ul>
             </div>
 
-            <div class="panel">
+            <div>
               <label>Links</label>              
               <ul class="side-nav">
 
               </ul>
             </div>
+          </div>
           </aside>
         </div>
         
