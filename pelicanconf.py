@@ -20,6 +20,7 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 DISQUS_SITENAME = "khuevu.github.io"
+GOOGLE_ANALYTICS = "UA-34233563-1"
 
 # Blogroll
 LINKS = (('Pelican', 'http://getpelican.com/'),
