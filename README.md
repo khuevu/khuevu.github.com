@@ -2,8 +2,8 @@
 
 ## Tools
 
-    * [Pelican](http://pelican.notmyidea.org), a static site generator written in Python
-    * Theme derived from [Crisp Ghost
+* [Pelican](http://pelican.notmyidea.org), a static site generator written in Python
+* Theme derived from [Crisp Ghost
       theme](https://github.com/kathyqian/crisp-ghost-theme) by [Kathy
       Qian](http://kathyqian.com/)
 
