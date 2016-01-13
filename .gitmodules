@@ -1,0 +1,3 @@
+[submodule "theme"]
+	path = theme
+	url = https://github.com/khuevu/minimalist-pelican-theme.git
