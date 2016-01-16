@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 AUTHOR = u'Khue Vu'
 SITENAME = u'Fundamentals'
 SITEURL = ''
-THEME = '/Users/khuevu/Projects/minimalist-pelican-theme'
+THEME = 'theme'
 PATH = 'content'
 
 TIMEZONE = 'Europe/Paris'
@@ -19,7 +19,7 @@ TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
-DISQUS_SITENAME = "khuevu.github.io"
+#DISQUS_SITENAME = "khuevu-techblog"
 GOOGLE_ANALYTICS = "UA-34233563-1"
 
 # Blogroll
