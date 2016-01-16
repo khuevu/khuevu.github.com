@@ -42,4 +42,5 @@ MD_EXTENSIONS = ['extra']
 #RELATIVE_URLS = True
 
 #TEMPLATE_PAGES = {'html/portfolio.html': 'portfolio.html'}
-#DISPLAY_PAGES_ON_MENU = True
+DISPLAY_PAGES_ON_MENU = False
+DISPLAY_CATEGORIES_ON_MENU = False
