@@ -23,7 +23,7 @@ I have tried buiding and flashing Firefox OS into my Galaxy Nexus phone. Here ar
 
 *From home screen, you swipe left or right to access app icons or market places*
 
-Apps are pre-grouped into different categories like `social`, `news`... As you can see, the graphic doesn't scale very well to match the screen size. 
+Apps are pre-grouped into different categories like `social`, `news`... As you can see, the graphic does not scale very well to match the screen size. 
 
 ![News](/images/firefoxos7-0.jpg)
 
@@ -41,6 +41,6 @@ Apps are pre-grouped into different categories like `social`, `news`... As you c
 
 *Inside an app*
 
-The overall experience is that it is still buggy and slow. My experience is short-live as there is a bug in which Firefox OS doesn't support soft buttons for phone without hardware button. So I have no way to go back to home screen other than restart the phone. If you up to the challenge and believe in the future of Firefox OS, you should try fixing this bug. 
+The overall experience is that it is still buggy and slow. My experience is short-live as there is a bug in which Firefox OS does not support soft buttons for phone without hardware button. So I have no way to go back to home screen other than restart the phone. If you up to the challenge and believe in the future of Firefox OS, you should try fixing this bug. 
 
 

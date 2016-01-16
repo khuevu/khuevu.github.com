@@ -6,6 +6,7 @@ AUTHOR = u'Khue Vu'
 SITENAME = u'Fundamentals'
 SITEURL = ''
 THEME = 'theme'
+#THEME = '/Users/khuevu/Projects/minimalist-pelican-theme'
 PATH = 'content'
 
 TIMEZONE = 'Europe/Paris'
@@ -39,3 +40,6 @@ MD_EXTENSIONS = ['extra']
 
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
+
+#TEMPLATE_PAGES = {'html/portfolio.html': 'portfolio.html'}
+#DISPLAY_PAGES_ON_MENU = True
