@@ -191,7 +191,7 @@ h3.post-title {
 .separator, .taglist, .feature-star {
 	color: #ccc;
 }
-.taglist a {
+.taglist a, em {
 	/*background-color:#ccc;*/
 	background-color: #C0C0C0;
 	color:#fff;
