@@ -1,7 +1,10 @@
 Title: ActionBar Tab with Pager
+Category: Technology
 Tags: android
+Image: https://developer.android.com/images/topic/libraries/architecture/navigation-tab-layout.png
+Summary: In Android application, for a view with multiple tabs, often we want to enable users to switch between tabs by swipping left or right. The small navigational detail can greatly enhance users' experiences given that on a mobile, it is always easier to perform a swipe than to reach your thumb up to select a tab.
 
-There are a number of questions on stackoverflow about this. In Android API, the ActionBar provides you with the capability of navigating Fragments in Tab mode, while Pager enables swiping of Fragments. And sometimes you will want to have both of these to enhance the user experience. This is a tutorial on how to combine both types of navigation in one activity.
+In Android API, the ActionBar provides you with the capability of navigating Fragments in Tab mode, while Pager enables swiping of Fragments. And sometimes you will want to have both of these to enhance the user experience. This is a tutorial on how to combine both types of navigation in one activity.
 
 In the implementation, the idea is to bind the event listener of ActionBar's TabListener and ViewPager's OnPageChangeListener into one class. So when there is event triggered in one component (tab or pager), you can invoke the respective action on the other. 
 
