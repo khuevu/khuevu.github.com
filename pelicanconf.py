@@ -9,7 +9,7 @@ THEME = 'theme'
 #THEME = '/Users/khuevu/Projects/minimalist-pelican-theme'
 PATH = 'content'
 
-TIMEZONE = 'Europe/Paris'
+TIMEZONE = 'Europe/London'
 
 DEFAULT_LANG = u'en'
 
