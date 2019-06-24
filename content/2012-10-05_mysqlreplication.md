@@ -1,4 +1,5 @@
 Title: A Tutorial to set up MySQL replication (master/slave) for high scalability
+Category: Technology
 Tags: mysql, replication, scalability, tutorial
 
 In this tutorial, we will set up two instances of MySQL on your localhost, one master and one slave and enable data replication between the master and the slave.

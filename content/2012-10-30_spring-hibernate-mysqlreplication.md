@@ -1,4 +1,5 @@
 Title: Integrate Spring and Hibernate with MySQL master/slave database
+Category: Technology
 Tags: java, spring, hibernate, mysql, scalability
 
 In my previous [post]({filename}/posts/Programming/2012-10-05_mysqlreplication.md), we have setup one master and one slave MySQL database. If you write your application to interact with database using jdbc connector, it already has the [support for database replication](http://dev.mysql.com/doc/refman/5.1/en/connector-j-reference-replication-connection.html). Basically, you need to use `com.mysql.jdbc.ReplicationDriver` and change connection to `readOnly` when you want it to direct traffics to slave instances. What if your application interfaces with database through Hibernate API? Hibernate doesn't explicitly support the replication. Setting Hibernate or Spring's transactions to `readOnly` doesn't change the underlying jdbc connection to `readOnly`. 

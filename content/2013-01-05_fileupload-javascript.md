@@ -1,4 +1,5 @@
 Title: Uploading file using Javascript
+Category: Technology
 Tags: javascript, facebook graph
 
 A few months ago, I have written a [chrome extension](https://chrome.google.com/webstore/detail/social-snap/bnhlaifngpmodnnkpebagndhomlcnaed) for instant sharing of captured content of a webpage to Facebook. So one of the requirement is that the captured image data is uploaded to Facebook. The familiar web flow of uploading a file to serverwould be presenting user with upload file form (html form with enctype="multipart/form-data") and let them select the file: 

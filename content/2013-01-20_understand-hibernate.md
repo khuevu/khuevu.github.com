@@ -1,5 +1,8 @@
 Title: Application Design with Hibernate 
+Category: Technology
+Image: https://pbs.twimg.com/profile_images/914842431748739072/66NFe2g3_400x400.jpg
 Tags: hibernate, java
+
 
 This article aims to discuss the basic design pattern of a web application using Hibernate; the basic concepts that you need to know well before actually implementing a Hibernate-based application. Hibernate Documentation can be a little bit confusing sometimes. This article tries to distill the important points to help you have a better understanding of Hibernate. And if you are already using Hibernate, hope it is still useful for you. Fundamentals always serves as building blocks for advanced techniques, an idea well illustrated in old time Chinese martial art movies. 
 

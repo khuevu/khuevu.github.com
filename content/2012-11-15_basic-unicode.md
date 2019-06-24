@@ -1,5 +1,7 @@
 Title: Character Encoding with Unicode
+Category: Technology
 Tags: encoding, python
+Summary: A brief description of character encoding in Python 2. It always pays off to understand how character encoding works
 
 ## The Unicode Standard
 

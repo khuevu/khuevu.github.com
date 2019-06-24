@@ -1,4 +1,5 @@
 Title: Optimize MySQL query by indexing
+Category: Technology
 Tags: mysql, optimization
 
 Database optimization is very crucial for any production grade application to achieve scalability and high performance. MySQL optimization involves different levels, from optimizing SQL queries, configuring system variables, buffer and cache, refining database structure. This article is going to focus on the first part: optimizing SQL queries to reduce response time. 
