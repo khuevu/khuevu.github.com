@@ -1,4 +1,4 @@
-Title: My works
+Title: Fun 
 Date: 2015-01-16 
 
 ### Moving Point Chart
