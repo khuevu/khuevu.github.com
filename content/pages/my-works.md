@@ -1,6 +1,10 @@
 Title: Fun 
 Date: 2015-01-16 
 
+### Bay Area Bike Sharing Trips with Leaflet.PowerMarker
+
+<iframe width="900" height="600" src="http://khuevu.github.io/Leaflet.PowerMarker/"></iframe>
+
 ### Moving Point Chart
 
 <p data-height="400" data-theme-id="0" data-slug-hash="qbvxXb" data-default-tab="result" data-user="khuevu" class='codepen'>See the Pen <a href='http://codepen.io/khuevu/pen/qbvxXb/'>qbvxXb</a> by Vu Minh Khue (<a href='http://codepen.io/khuevu'>@khuevu</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
